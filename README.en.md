@@ -31,7 +31,7 @@ sessions, or reimplement the agent.
 
 | Plugin | One line | Version | Checks |
 |---|---|---|---|
-| [`dsh-sidebar-sections`](https://github.com/tzhaos/dsh-sidebar-sections) | Pinned / Projects / Recent / Archived sidebar | 2.3.0 | 67 |
+| [`dsh-sidebar-sections`](https://github.com/tzhaos/dsh-sidebar-sections) | Pinned / Projects / Recent / Archived sidebar with safe delete on every row | 2.4.0 | 68 |
 | [`dsh-file-link-actions`](https://github.com/tzhaos/dsh-file-link-actions) | File-link context menu: default app, reveal folder, copy path | 1.0.0 | 20 |
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | Searchable composer history with `↑` recall | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | Unified button/tab hover and Codex-style tooltips | 1.0.11 | 34 |
@@ -39,7 +39,7 @@ sessions, or reimplement the agent.
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Withdraw queued messages back into the composer | 1.2.0 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 
-All packages: **201 zero-dependency checks**; no build step, no runtime npm dependencies.
+All packages: **202 zero-dependency checks**; no build step, no runtime npm dependencies.
 
 ## Agent install prompt
 
@@ -218,8 +218,8 @@ DSH is pre-stable; client APIs, slots and DOM contracts may change between relea
 
 ### dsh-sidebar-sections
 
-[![version](https://img.shields.io/badge/version-2.3.0-blue)](https://github.com/tzhaos/dsh-sidebar-sections)
-[![checks](https://img.shields.io/badge/checks-67-brightgreen)](https://github.com/tzhaos/dsh-sidebar-sections/blob/main/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-2.4.0-blue)](https://github.com/tzhaos/dsh-sidebar-sections)
+[![checks](https://img.shields.io/badge/checks-68-brightgreen)](https://github.com/tzhaos/dsh-sidebar-sections/blob/main/scripts/check.mjs)
 
 Turns the sidebar into four first-class sections: **Pinned / Projects / Recent / Archived**.
 
@@ -430,12 +430,12 @@ node scripts/check-all.mjs
 ```
 
 ```text
-all packages passed: 7 packages, 201 checks
+all packages passed: 7 packages, 202 checks
 ```
 
 | Package | Checks |
 |---|---|
-| `dsh-sidebar-sections` | 67 |
+| `dsh-sidebar-sections` | 68 |
 | `dsh-file-link-actions` | 20 |
 | `dsh-composer-history` | 29 |
 | `dsh-hover-polish` | 34 |

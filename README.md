@@ -28,7 +28,7 @@ monorepo。七个 package 可以一起安装，也可以单独安装、单独启
 
 | 插件 | 一句话 | 版本 | 检查 |
 |---|---|---|---|
-| [`dsh-sidebar-sections`](https://github.com/tzhaos/dsh-sidebar-sections) | 置顶 / 项目 / 最近 / 归档四分区侧边栏 | 2.3.0 | 67 |
+| [`dsh-sidebar-sections`](https://github.com/tzhaos/dsh-sidebar-sections) | 置顶 / 项目 / 最近 / 归档四分区侧边栏，所有会话行可安全删除 | 2.4.0 | 68 |
 | [`dsh-file-link-actions`](https://github.com/tzhaos/dsh-file-link-actions) | 文件链接右键：默认应用打开、定位文件夹、复制路径 | 1.0.0 | 20 |
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | 可搜索、可用 `↑` 取回的输入历史 | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | 统一按钮/标签 hover 与 Codex 风格 Tooltip | 1.0.11 | 34 |
@@ -36,7 +36,7 @@ monorepo。七个 package 可以一起安装，也可以单独安装、单独启
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 把排队消息撤回输入栏 | 1.2.0 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
 
-全部 package 合计 **201 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
+全部 package 合计 **202 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
 
 ## 给 Agent 的安装指令
 
@@ -210,8 +210,8 @@ DSH 仍是 pre-stable；客户端 API、slot 和 DOM 契约变化时，插件需
 
 ### dsh-sidebar-sections
 
-[![version](https://img.shields.io/badge/version-2.3.0-blue)](https://github.com/tzhaos/dsh-sidebar-sections)
-[![checks](https://img.shields.io/badge/checks-67-brightgreen)](https://github.com/tzhaos/dsh-sidebar-sections/blob/main/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-2.4.0-blue)](https://github.com/tzhaos/dsh-sidebar-sections)
+[![checks](https://img.shields.io/badge/checks-68-brightgreen)](https://github.com/tzhaos/dsh-sidebar-sections/blob/main/scripts/check.mjs)
 
 把侧边栏变成 **置顶 / 项目 / 最近 / 归档** 四个正式分区。
 
@@ -407,12 +407,12 @@ node scripts/check-all.mjs
 ```
 
 ```text
-all packages passed: 7 packages, 201 checks
+all packages passed: 7 packages, 202 checks
 ```
 
 | Package | Checks |
 |---|---|
-| `dsh-sidebar-sections` | 67 |
+| `dsh-sidebar-sections` | 68 |
 | `dsh-file-link-actions` | 20 |
 | `dsh-composer-history` | 29 |
 | `dsh-hover-polish` | 34 |
