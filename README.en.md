@@ -40,8 +40,8 @@ sessions, or reimplement the agent.
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | Turn long pasted text into a `.txt` attachment, expandable back into the composer | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | Drag a sidebar file into the composer as a reference and bridge Desktop file paths | 1.1.0 | 15 |
-| [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Back/forward session controls in the top-left | 1.3.2 | 11 |
-| [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex-style left rail + account settings menu | 1.7.6 | 21 |
+| [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Back/forward session controls in the top-left | 1.3.3 | 11 |
+| [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex-style left rail + account settings menu | 1.7.7 | 22 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.1.0 | 11 |
 
 All packages: **213 zero-dependency checks**; no build step, no runtime npm dependencies.
@@ -563,7 +563,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-long-paste` | 15 |
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
-| `dsh-left-rail` | 21 |
+| `dsh-left-rail` | 22 |
 | `dsh-quick-fork` | 11 |
 
 ## Privacy and data
