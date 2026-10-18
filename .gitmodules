@@ -30,3 +30,7 @@
 	path = packages/dsh-quick-fork
 	url = https://github.com/tzhaos/dsh-quick-fork.git
 	branch = main
+[submodule "packages/dsh-long-paste"]
+	path = packages/dsh-long-paste
+	url = https://github.com/tzhaos/dsh-long-paste.git
+	branch = main
