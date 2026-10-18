@@ -12,10 +12,6 @@ manager, or copy the file path.
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-20-brightgreen)
 
-![File-link context menu mockup](docs/overview.en.png)
-
-*Image notes: right-click a local file link to choose open with default app, reveal in folder or copy path; drawn for the current 1.0.0 behaviour.*
-
 ## Why
 
 DSH renders local file references in a conversation as links. A left click opens the shipped document

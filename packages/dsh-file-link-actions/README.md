@@ -11,10 +11,6 @@
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-20-brightgreen)
 
-![文件链接右键菜单示意](docs/overview.png)
-
-*图片说明：在对话中右键本地文件链接，弹出「用默认应用打开 / 在文件夹中显示 / 复制文件路径」菜单；按当前 1.0.0 行为绘制。*
-
 ## 为什么
 
 DSH 会把对话里的本地文件路径渲染成链接。左键点击会打开侧边栏文档预览，但想用系统默认应用

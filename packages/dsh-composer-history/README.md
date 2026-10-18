@@ -11,10 +11,6 @@
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-29-brightgreen)
 
-![输入历史面板示意](docs/overview.png)
-
-*图片说明：输入框时钟入口与历史面板，可搜索并取回当前会话发送过的提示词；按当前 1.2.0 行为绘制。*
-
 ## 为什么
 
 对话一长，想重新使用之前发过的提示词，只能往上翻聊天记录再复制。DSH 的输入框没有历史

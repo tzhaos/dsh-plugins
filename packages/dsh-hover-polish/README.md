@@ -11,10 +11,6 @@
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-34-brightgreen)
 
-![Hover 与 Tooltip 示意](docs/overview.png)
-
-*图片说明：工具栏图标按钮、模型选择器 Tooltip 与文件标签页的 hover 效果；按当前 1.0.11 行为绘制。*
-
 ## 为什么
 
 DSH 的按钮 hover 覆盖不完整：有些控件只有浏览器原生 `title` 提示，有些图标按钮没有背景反馈，
