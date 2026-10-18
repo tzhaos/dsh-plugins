@@ -12,9 +12,6 @@ package's own `CHANGELOG.md`.
 - The main repository now provides the shared README, installer, checks and agent install prompt;
   plugin code, tests and changelogs live in their own repositories.
 - `update-all.mjs` now syncs and initializes submodules before re-linking the profile.
-
-### Changed
-
 - Expanded `README.md` and `README.en.md` into a full per-plugin guide: problem statement, features,
   usage, install command, data boundaries, limitations and package-level documentation links for each
   of the plugins.
