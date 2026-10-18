@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Composer History",
+    "description": "Adds a searchable history of previous user prompts to the conversation composer, with quick recall to the draft."
+  }
+}

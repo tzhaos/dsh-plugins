@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "File Link Actions",
+    "description": "Right-click a file link in a conversation to open it with the default application, reveal it in the file manager, or copy its path."
+  }
+}

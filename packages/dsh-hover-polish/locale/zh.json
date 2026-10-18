@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "悬停质感",
+    "description": "为 DeepSeek Harness 的按钮补上统一、接近 Codex 的 hover 反馈与提示气泡。"
+  }
+}
