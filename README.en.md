@@ -2,12 +2,12 @@
 
 # DSH Plugins
 
-**Six independent DeepSeek Harness Web client plugins.**
+**Seven independent DeepSeek Harness Web client plugins.**
 
-Sidebar sections · File-link actions · Composer history · Hover · One-click continue · Queue withdraw
+Sidebar sections · File-link actions · Composer history · Hover · One-click continue · Queue withdraw · Tab middle-click
 
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)](https://github.com/deepseek-ai/deepseek-harness)
-[![Checks](https://img.shields.io/badge/checks-188-brightgreen)](scripts/check-all.mjs)
+[![Checks](https://img.shields.io/badge/checks-201-brightgreen)](scripts/check-all.mjs)
 [![Runtime deps](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)](package.json)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -22,7 +22,7 @@ Sidebar sections · File-link actions · Composer history · Hover · One-click 
 ## What this is
 
 A monorepo of Web client plugins for
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH). The six packages can be
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH). The seven packages can be
 installed together or independently, enabled and disabled separately, and each is still a complete
 DSH bundle.
 
@@ -37,8 +37,9 @@ sessions, or reimplement the agent.
 | [`dsh-hover-polish`](packages/dsh-hover-polish) | Unified button/tab hover and Codex-style tooltips | 1.0.11 | 34 |
 | [`dsh-continue`](packages/dsh-continue) | Play control in the send button after a stop/error/truncation | 1.1.1 | 19 |
 | [`dsh-queue-withdraw`](packages/dsh-queue-withdraw) | Withdraw queued messages back into the composer | 1.2.0 | 19 |
+| [`dsh-tab-middle-click`](packages/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 
-All packages: **188 zero-dependency checks**; no build step, no runtime npm dependencies.
+All packages: **201 zero-dependency checks**; no build step, no runtime npm dependencies.
 
 ## Quick start
 
@@ -64,7 +65,7 @@ From a Creator-preset session:
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-`target` must be absolute. All six targets:
+`target` must be absolute. All seven targets:
 
 ```text
 <monorepo>/packages/dsh-sidebar-sections
@@ -73,6 +74,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 <monorepo>/packages/dsh-hover-polish
 <monorepo>/packages/dsh-continue
 <monorepo>/packages/dsh-queue-withdraw
+<monorepo>/packages/dsh-tab-middle-click
 ```
 
 ### Install one package with the `dsh plugin` CLI
@@ -357,11 +359,32 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-queue-wi
 
 ---
 
+### dsh-tab-middle-click
+
+Turns middle-click into a tab-close gesture.
+
+- Middle-click on `[data-dockkit-tab]` / `[data-sidebar-right-tab]`
+- Clicks the tab's existing close control, reusing DSH's own close flow
+- Prevents middle-click autoscroll while over a tab
+- Leaves tabs without a close control untouched
+
+**Usage:** middle-click a sidebar or dock tab.
+
+**Limitations:** depends on DockKit's tab DOM contract; middle-click only, no new keyboard shortcut.
+
+```text
+plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-middle-click")
+```
+
+[Docs](packages/dsh-tab-middle-click/README.en.md) · [中文](packages/dsh-tab-middle-click/README.md)
+
+---
+
 ## Repository layout
 
 ```text
 .
-├── packages/          # six complete DSH bundles
+├── packages/          # seven complete DSH bundles
 ├── scripts/
 │   ├── check-all.mjs
 │   └── install-all.mjs
@@ -383,7 +406,7 @@ node scripts/check-all.mjs
 ```
 
 ```text
-all packages passed: 6 packages, 188 checks
+all packages passed: 7 packages, 201 checks
 ```
 
 | Package | Checks |
@@ -394,6 +417,7 @@ all packages passed: 6 packages, 188 checks
 | `dsh-hover-polish` | 34 |
 | `dsh-continue` | 19 |
 | `dsh-queue-withdraw` | 19 |
+| `dsh-tab-middle-click` | 13 |
 
 ## Privacy and data
 

@@ -2,12 +2,12 @@
 
 # DSH Plugins
 
-**六个独立的 DeepSeek Harness Web 客户端插件。**
+**七个独立的 DeepSeek Harness Web 客户端插件。**
 
-侧边栏分区 · 文件链接右键 · 输入历史 · Hover · 一键继续 · 排队消息撤回
+侧边栏分区 · 文件链接右键 · 输入历史 · Hover · 一键继续 · 排队消息撤回 · 标签中键关闭
 
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)](https://github.com/deepseek-ai/deepseek-harness)
-[![Checks](https://img.shields.io/badge/checks-188-brightgreen)](scripts/check-all.mjs)
+[![Checks](https://img.shields.io/badge/checks-201-brightgreen)](scripts/check-all.mjs)
 [![Runtime deps](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)](package.json)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -22,7 +22,7 @@
 ## 这是什么
 
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）Web 客户端插件
-monorepo。六个 package 可以一起安装，也可以单独安装、单独启停；每个仍然是完整 DSH bundle。
+monorepo。七个 package 可以一起安装，也可以单独安装、单独启停；每个仍然是完整 DSH bundle。
 
 它们只补日常交互中缺失的动作，不替换宿主组件，不接管会话，也不重新实现 Agent。
 
@@ -34,8 +34,9 @@ monorepo。六个 package 可以一起安装，也可以单独安装、单独启
 | [`dsh-hover-polish`](packages/dsh-hover-polish) | 统一按钮/标签 hover 与 Codex 风格 Tooltip | 1.0.11 | 34 |
 | [`dsh-continue`](packages/dsh-continue) | 停止/报错/截断后把发送按钮变成播放键 | 1.1.1 | 19 |
 | [`dsh-queue-withdraw`](packages/dsh-queue-withdraw) | 把排队消息撤回输入栏 | 1.2.0 | 19 |
+| [`dsh-tab-middle-click`](packages/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
 
-全部 package 合计 **188 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
+全部 package 合计 **201 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
 
 ## 快速开始
 
@@ -47,7 +48,7 @@ monorepo。六个 package 可以一起安装，也可以单独安装、单独启
 git clone https://github.com/tzhaos/dsh-plugins.git
 cd dsh-plugins
 node scripts/install-all.mjs --dry-run   # 先看会改什么
-node scripts/install-all.mjs             # 写入 profile 并链接六个 package
+node scripts/install-all.mjs             # 写入 profile 并链接七个 package
 ```
 
 已经在本地 `D:\dsh-plugins\dsh-plugins` 的话，直接从 `node scripts/install-all.mjs` 开始。
@@ -61,7 +62,7 @@ node scripts/install-all.mjs             # 写入 profile 并链接六个 packag
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-`target` 必须是绝对路径。六个 target：
+`target` 必须是绝对路径。七个 target：
 
 ```text
 <monorepo>/packages/dsh-sidebar-sections
@@ -70,6 +71,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 <monorepo>/packages/dsh-hover-polish
 <monorepo>/packages/dsh-continue
 <monorepo>/packages/dsh-queue-withdraw
+<monorepo>/packages/dsh-tab-middle-click
 ```
 
 ### 用 `dsh plugin` CLI 单独安装
@@ -336,11 +338,32 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-queue-wi
 
 ---
 
+### dsh-tab-middle-click
+
+把鼠标中键变成标签页的关闭手势。
+
+- 在 `[data-dockkit-tab]` / `[data-sidebar-right-tab]` 上按鼠标中键
+- 点击标签内已有的关闭控件，复用 DSH 自己的关闭流程
+- 阻止中键在标签上触发浏览器自动滚动
+- 没有关闭控件的标签不做任何事
+
+**使用：** 在侧边栏或停靠区的标签上按鼠标中键。
+
+**限制：** 依赖 DockKit 的 tab DOM 契约；只处理中键，不新增键盘快捷键。
+
+```text
+plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-middle-click")
+```
+
+[详细文档](packages/dsh-tab-middle-click/README.md) · [English](packages/dsh-tab-middle-click/README.en.md)
+
+---
+
 ## 仓库结构
 
 ```text
 .
-├── packages/          # 六个完整 DSH bundle
+├── packages/          # 七个完整 DSH bundle
 ├── scripts/
 │   ├── check-all.mjs
 │   └── install-all.mjs
@@ -361,7 +384,7 @@ node scripts/check-all.mjs
 ```
 
 ```text
-all packages passed: 6 packages, 188 checks
+all packages passed: 7 packages, 201 checks
 ```
 
 | Package | Checks |
@@ -372,6 +395,7 @@ all packages passed: 6 packages, 188 checks
 | `dsh-hover-polish` | 34 |
 | `dsh-continue` | 19 |
 | `dsh-queue-withdraw` | 19 |
+| `dsh-tab-middle-click` | 13 |
 
 ## 隐私与数据
 

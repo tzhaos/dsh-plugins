@@ -9,7 +9,7 @@ package's own `CHANGELOG.md`.
 
 - Expanded `README.md` and `README.en.md` into a full per-plugin guide: problem statement, features,
   usage, install command, data boundaries, limitations and package-level documentation links for each
-  of the six plugins.
+  of the plugins.
 - Added a quick-start section for the monorepo installer and individual `plugin_manager` install
   commands, plus compatibility, verification, privacy and development sections.
 - Condensed the per-plugin sections to current behaviour; fixes from the development history are no
@@ -20,6 +20,8 @@ package's own `CHANGELOG.md`.
   screenshots captured from the running UI; drawn approximations are not used as documentation.
 - Documented how to update an installed plugin for path-link and Plugin Manager installs, including
   the required full DSH restart and preserved local data.
+- Added `dsh-tab-middle-click` 1.0.0: middle-click closes a sidebar/dock tab through its existing
+  close control.
 - Clarified that `dsh plugin` only forwards to pnpm: it installs the package but does not register the
   bundle in `dsh.profile.bundles`, which is why the monorepo root or a bare `github:` URL is not a
   complete install command.
@@ -31,7 +33,7 @@ package's own `CHANGELOG.md`.
 
 ### Added
 
-- Consolidated six independently managed plugins into one monorepo under `packages/`:
+- Consolidated the independently managed plugins into one monorepo under `packages/`:
   - `dsh-sidebar-sections` 2.3.0
   - `dsh-file-link-actions` 1.0.0
   - `dsh-composer-history` 1.2.0
