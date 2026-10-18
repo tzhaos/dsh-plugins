@@ -20,9 +20,9 @@
 | [`dsh-composer-history`](packages/dsh-composer-history) | 1.2.0 | 29 | 输入框历史输入：搜索、直接按 `↑` 取回、面板清空，设置页可查看/删除/清空。 |
 | [`dsh-hover-polish`](packages/dsh-hover-polish) | 1.0.11 | 34 | 统一按钮与标签页 hover、Codex 风格 Tooltip、解释性气泡、完整标签标题和快捷键去重。 |
 | [`dsh-continue`](packages/dsh-continue) | 1.1.0 | 18 | 正常结束或中断的对话在输入框为空时把发送按钮变为播放键，一键继续。 |
-| [`dsh-queue-withdraw`](packages/dsh-queue-withdraw) | 1.1.1 | 17 | 把排队消息撤回输入栏：文本和图片回填草稿并从队列移除；文件附件仍受 Host API 限制。 |
+| [`dsh-queue-withdraw`](packages/dsh-queue-withdraw) | 1.2.0 | 19 | 把排队消息撤回输入栏：文本、图片和临时缓存文件回填草稿并从队列移除。 |
 
-全部测试合计 **185 项**，零运行时依赖。
+全部测试合计 **187 项**，零运行时依赖。
 
 ## 安装
 
@@ -102,7 +102,7 @@ node scripts/check.mjs
 
 - 插件仍使用 DSH pre-stable 客户端 API 和少量宿主 DOM 契约，DSH 升级后可能需要适配
 - `install-all.mjs` 是开发用 path-link 安装；正式分发仍建议用 Plugin Manager
-- 文件附件的队列撤回仍受 Host 附件读取能力限制，图片已支持
+- 文件附件的队列撤回依赖选择文件时的浏览器临时缓存；安装前已存在的队列项没有缓存
 
 ## 从独立仓库迁移
 

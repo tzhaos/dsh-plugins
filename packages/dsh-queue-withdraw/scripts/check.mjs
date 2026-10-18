@@ -43,7 +43,7 @@ function equal(actual, expected, message) {
 
 await check('manifest declares a DSH bundle and web client half', () => {
   assert.equal(manifest.name, 'dsh-queue-withdraw')
-  assert.equal(manifest.version, '1.1.1')
+  assert.equal(manifest.version, '1.2.0')
   assert.equal(manifest.license, 'MIT')
   assert.equal(manifest.main, 'index.js')
   assert.equal(manifest.exports['./client'], './client.js')
@@ -400,7 +400,7 @@ function scenario(options = {}) {
   const injected = registration.options.inject('session-a')
   return {
     plugin, registration, registrations, localeRegistrations, document, reactRuntime,
-    updates, notices, draft, session, scope, notification, t, injected,
+    updates, notices, draft, session, scope, notification, t, injected, conversation,
     addedAttachments, removedAttachments, releasedDrafts, draftCalls, readCalls,
   }
 }
@@ -466,14 +466,14 @@ await check('withdraw restores the draft when the Host rejects removal', async (
   equal(applied.notices, [{ level: 'error', text: 'failed' }])
 })
 
-await check('withdraw refuses file attachments without touching the draft', async () => {
+await check('a file attachment without a cache fails without touching the draft', async () => {
   const applied = scenario({ draft: 'existing' })
   const item = queueItem('queued text', [{ type: 'file', attachment: { attachmentId: 'file-1', name: 'notes.txt', bytes: 10 } }])
-  const ok = await applied.injected.actions.withdraw(item, 'empty', 'failed', 'attachment')
+  const ok = await applied.injected.actions.withdraw(item, 'empty', 'failed', 'attachment', 'cache-missing')
   assert.equal(ok, false)
   assert.equal(applied.draft.value, 'existing')
   equal(applied.updates, [])
-  equal(applied.notices, [{ level: 'error', text: 'attachment' }])
+  equal(applied.notices, [{ level: 'error', text: 'cache-missing' }])
 })
 
 await check('withdraw rehydrates image attachments into the draft', async () => {
@@ -486,6 +486,31 @@ await check('withdraw rehydrates image attachments into the draft', async () => 
   assert.equal(applied.draftCalls.length, 1, 'draft file registered')
   equal(applied.updates, [{ itemId: 'item-1', action: { kind: 'remove' } }])
   equal(applied.notices, [], 'successful withdraw is silent')
+})
+
+await check('withdraw restores a file attachment from the temporary cache', async () => {
+  const applied = scenario({ draft: 'existing' })
+  const file = { name: 'notes.txt', size: 10, type: 'text/plain', lastModified: 1 }
+  applied.conversation.createDrafts('session-a', [file])
+  const item = queueItem('queued text', [{ type: 'file', attachment: { attachmentId: 'file-1', name: 'notes.txt', bytes: 10 } }])
+  const ok = await applied.injected.actions.withdraw(item, 'empty', 'failed', 'attachment', 'cache-missing')
+  assert.equal(ok, true)
+  equal(applied.updates, [{ itemId: 'item-1', action: { kind: 'remove' } }])
+  assert.equal(applied.draft.value, 'existing\n\nqueued text')
+  equal(applied.notices, [], 'successful withdraw is silent')
+  assert.equal(applied.draftCalls.length, 2, 'restored file registered')
+  equal(applied.addedAttachments, ['draft-1'])
+})
+
+await check('forgetCached drops files after their queue message leaves', async () => {
+  const applied = scenario({ draft: 'existing' })
+  applied.conversation.createDrafts('session-a', [{ name: 'notes.txt', size: 10, type: 'text/plain' }])
+  applied.injected.actions.forgetCached([{ name: 'notes.txt', size: 10 }])
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  const item = queueItem('queued text', [{ type: 'file', attachment: { attachmentId: 'file-1', name: 'notes.txt', bytes: 10 } }])
+  const ok = await applied.injected.actions.withdraw(item, 'empty', 'failed', 'attachment', 'cache-missing')
+  assert.equal(ok, false)
+  equal(applied.notices, [{ level: 'error', text: 'cache-missing' }])
 })
 
 await check('the decoration adds one withdraw button to the Host queue row', () => {
@@ -507,13 +532,14 @@ await check('clicking the injected button withdraws the queued text', async () =
   assert(button.disabled === true, 'button disabled after acceptance')
 })
 
-await check('a file-attachment queue row gets a disabled withdraw button', () => {
+await check('a file-attachment queue row keeps a withdraw button ready for cache lookup', () => {
   const applied = scenario()
   const item = queueItem('queued text', [{ type: 'file', attachment: { attachmentId: 'file-1', name: 'notes.txt', bytes: 10 } }])
   mountDecoration(applied, [item])
   const button = applied.document._row.querySelector('[data-dsh-queue-withdraw]')
   assert(button, 'button injected')
-  assert.equal(button.disabled, true)
+  assert.equal(button.disabled, false)
+  assert.equal(button.title, applied.t('button.cacheHint'))
 })
 
 await check('an image-attachment queue row keeps the withdraw button enabled', () => {
@@ -523,6 +549,7 @@ await check('an image-attachment queue row keeps the withdraw button enabled', (
   const button = applied.document._row.querySelector('[data-dsh-queue-withdraw]')
   assert(button, 'button injected')
   assert.equal(button.disabled, false)
+  assert.equal(button.title, applied.t('button.tooltip'))
 })
 
 await check('the registry contribution disposes its injected button', () => {

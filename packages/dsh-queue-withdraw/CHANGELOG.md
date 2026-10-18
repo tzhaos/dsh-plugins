@@ -4,6 +4,25 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-10-18
+
+### Added
+
+- File attachments can now be withdrawn. The plugin wraps the conversation draft registry once and
+  caches each selected browser `File` in IndexedDB (plus a synchronous in-memory copy) before the
+  Host uploads it.
+- Withdrawing a queued file looks the cache up by `name + size`, registers a draft file again and
+  lets DSH re-upload it normally.
+- Caches are removed when the queue item leaves the queue, after a successful withdrawal, or once
+  they are older than 24 hours.
+- The file action explains that it uses the local cache; old queued files with no cache report a
+  missing-cache error without touching the queue or draft.
+
+### Verified
+
+- `node scripts/check.mjs`: 19 checks green, including cached file restoration, missing-cache
+  refusal and cache cleanup.
+
 ## [1.1.1] - 2026-10-18
 
 ### Fixed

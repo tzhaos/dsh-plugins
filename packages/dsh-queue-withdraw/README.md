@@ -6,10 +6,10 @@
 排队中的消息增加 **撤回到输入栏** 操作，而不是只能编辑、删除或插话。
 
 ![DeepSeek Harness](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)
-![Version](https://img.shields.io/badge/version-1.1.1-blue)
+![Version](https://img.shields.io/badge/version-1.2.0-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
-![Checks](https://img.shields.io/badge/checks-17-brightgreen)
+![Checks](https://img.shields.io/badge/checks-19-brightgreen)
 
 ## 为什么
 
@@ -22,8 +22,23 @@ DSH 的排队消息行提供编辑、删除和插话三个动作。如果只是�
 - 通过 `Session.updateQueue(itemId, { kind: 'remove' })` 从队列移除
 - 如果输入框已有草稿，会把消息追加到草稿末尾，而不是覆盖
 - 移除失败会把草稿恢复到操作前，消息仍在队列里
-- **图片附件可撤回**：通过 Session 读取图片字节，重建为草稿图片附件后随文本一起回到输入栏
-- 文件附件暂不支持撤回；按钮会禁用并说明原因
+- **图片附件可撤回**：优先使用临时缓存，缓存不存在时通过 Session 读取图片字节重建
+- **文件附件可撤回**：在用户选择文件、Host 上传之前，把浏览器 `File` 临时缓存到 IndexedDB；
+  撤回时重新注册为草稿文件附件，让 DSH 自己重新上传
+
+## 文件附件临时缓存
+
+文件内容只存在于浏览器选择文件的那一刻。队列项本身只有
+`attachmentId + name + bytes`，所以插件在 `conversation.createDrafts()` 被调用时保存一份临时副本：
+
+1. 用户选择文件，Host 调用草稿注册表；
+2. 插件在同一个调用里把 `File` 写入 IndexedDB（当前页面同时保留内存副本）；
+3. 消息发送后进入队列，缓存继续保留；
+4. 撤回时按 `name + size` 找到缓存，通过 `createDrafts` + `addAttachments` 重新放回输入框；
+5. 撤回成功、队列项被发送/删除，或缓存超过 24 小时后清理。
+
+缓存只存在当前浏览器 profile 的 IndexedDB 中，不会上传到 Host，也不会离开本机。它解决的是
+“文件在队列里只剩元数据”的问题，不改变 Host 的队列协议。
 
 ## 行为
 
@@ -34,10 +49,11 @@ DSH 的排队消息行提供编辑、删除和插话三个动作。如果只是�
 
 点击撤回的流程：
 
-1. 读取排队消息的文本块；
-2. 把文本追加到当前草稿；图片附件通过会话草稿附件注册表重建并加入草稿；
-3. 调用公开的 `session.updateQueue(itemId, { kind: 'remove' })`；
-4. Host 接受后队列行消失，草稿已经能看到内容，因此成功时**不弹持久提示**；失败才恢复原草稿并提示。
+1. 读取排队消息的文本块和附件块；
+2. 优先从临时缓存取回图片/文件，图片没有缓存时回退到 `session.readAttachment()`；
+3. 通过会话草稿附件注册表把附件重新加入草稿，再把文本追加到当前草稿；
+4. 调用公开的 `session.updateQueue(itemId, { kind: 'remove' })`；
+5. Host 接受后队列行消失，草稿已经能看到内容，因此成功时**不弹持久提示**；失败才恢复原草稿并提示。
 
 ## 安装
 
@@ -77,15 +93,19 @@ plugin_manager(action="install_bundle", target="<本目录的绝对路径>")
 并通过标准 Session 动作完成撤回：
 
 1. 用 MutationObserver 跟踪 `[data-queue-dock]` 的渲染，给每个 Host 队列行追加一个紧凑按钮；
-2. 按钮支持文本和图片；文件附件禁用；
-3. 点击时先把文本写入会话作用域 input shell 的草稿，再调用 `updateQueue(remove)`；
-4. 失败时恢复草稿并给出错误提示。
+2. 在会话注入阶段装饰 `conversation.createDrafts`，缓存浏览器 `File`；
+3. 按钮支持文本、图片和文件附件；文件缓存缺失时不修改队列，并提示需要重新选择文件；
+4. 点击时先把附件和文本写入当前草稿，再调用 `updateQueue(remove)`；
+5. 队列项离开队列时清理对应缓存；失败时恢复草稿并给出错误提示。
 
 不新增远端接口，不改变 QueueDock 自己的编辑/删除/插话逻辑。
 
 ## 已知限制
 
-- **文件附件暂不支持**：Host 只提供图片附件的读取接口，没有文件附件的回填/下载路径；图片附件可以撤回
+- **只覆盖本插件加载后选择的文件**：安装前已进入队列的文件没有缓存，撤回会提示本地缓存缺失
+- 浏览器清空站点数据、使用隐私模式、IndexedDB 写入失败或缓存超过 24 小时时，文件可能无法恢复
+- 缓存按 `name + size` 匹配；同名同大小的多个文件可能匹配到最近一次缓存
+- 队列消息长时间保留在队列中时，超过 24 小时的缓存可能在清理时被删除
 - 图片撤回依赖会话的草稿附件注册表（`createDrafts` / `addAttachments`），DSH 升级后可能需要适配
 - 队列必须在当前会话视图中渲染；折叠时展开队列后才能看到按钮
 - 不处理子智能体不可变的队列
@@ -98,8 +118,8 @@ plugin_manager(action="install_bundle", target="<本目录的绝对路径>")
 node scripts/check.mjs
 ```
 
-零依赖测试覆盖清单、bundle patch、locale、队列文本提取、撤回成功/失败、草稿恢复、图片附件回填、文件附件保护、
-Host 队列行按钮注入和主题样式等 17 项检查。
+零依赖测试覆盖清单、bundle patch、locale、队列文本提取、撤回成功/失败、草稿恢复、图片附件回填、
+文件临时缓存回填、缓存清理、Host 队列行按钮注入和主题样式等 19 项检查。
 
 ## 许可证
 

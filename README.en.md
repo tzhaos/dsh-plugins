@@ -20,9 +20,9 @@ release metadata.
 | [`dsh-composer-history`](packages/dsh-composer-history) | 1.2.0 | 29 | Composer prompt history with search, direct `↑` recall, palette clear and a Settings tab to view/delete/clear records. |
 | [`dsh-hover-polish`](packages/dsh-hover-polish) | 1.0.11 | 34 | Unified button/tab hover, Codex-style tooltips, explanatory bubbles, full tab titles and shortcut dedupe. |
 | [`dsh-continue`](packages/dsh-continue) | 1.1.0 | 18 | Turns the empty-composer send button into a one-click play/continue control after a terminal turn. |
-| [`dsh-queue-withdraw`](packages/dsh-queue-withdraw) | 1.1.1 | 17 | Withdraw queued messages back into the draft, including text and images; file attachments remain limited by Host APIs. |
+| [`dsh-queue-withdraw`](packages/dsh-queue-withdraw) | 1.2.0 | 19 | Withdraw queued text, images and temporarily cached files back into the draft. |
 
-All suites total **185 checks**, with no runtime dependencies.
+All suites total **187 checks**, with no runtime dependencies.
 
 ## Install
 
@@ -104,7 +104,7 @@ Repository rules:
 - plugins still use pre-stable DSH client APIs and a few Host DOM contracts; upgrades may need
   compatibility updates
 - `install-all.mjs` is a development path-link installer; distribution should use Plugin Manager
-- file attachments still cannot be withdrawn because the Host exposes image attachment reads only
+- withdrawing file attachments relies on the browser cache captured when the file was selected; queue items from before the plugin installed have no cache
 
 ## Migrated from standalone repositories
 

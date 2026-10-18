@@ -24,7 +24,9 @@ window.__ModuleLoader__.load({
     const zh = {
       'button.label': '撤回到输入栏',
       'button.tooltip': '把这条排队消息撤回输入栏',
-      'button.attachments': '文件附件暂不支持撤回；图片附件可以',
+      'button.attachments': '这条消息包含暂不支持的附件内容',
+      'button.cacheMissing': '没有找到该文件附件的本地缓存，无法撤回',
+      'button.cacheHint': '撤回文件附件（使用本插件的本地缓存）',
       'button.empty': '这条排队消息没有可撤回的文本',
       'button.failed': '撤回失败，消息仍在队列中',
     }
@@ -32,13 +34,189 @@ window.__ModuleLoader__.load({
     const en = {
       'button.label': 'Withdraw to input',
       'button.tooltip': 'Withdraw this queued message back into the composer',
-      'button.attachments': 'File attachments cannot be withdrawn yet; images are supported',
+      'button.attachments': 'This message contains attachment content that cannot be withdrawn',
+      'button.cacheMissing': 'No local cache was found for this file attachment; it cannot be withdrawn',
+      'button.cacheHint': 'Withdraw file attachment (uses this plugin\'s local cache)',
       'button.empty': 'This queued message has no text to withdraw',
       'button.failed': 'Withdraw failed; the message is still queued',
     }
 
     /** Icon used by the injected row action. */
     const WITHDRAW_ICON = '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v7M5 6l3 3 3-3"/><path d="M3 12v1.5h10V12"/></svg>'
+
+    /** Short-lived browser cache of files selected before a queue submission. */
+    const CACHE_DB = 'dsh-queue-withdraw'
+    const CACHE_STORE = 'files'
+    const CACHE_TTL_MS = 24 * 60 * 60 * 1000
+    const memoryCache = []
+    let cacheDbPromise
+
+    /** @returns {Promise<IDBDatabase|null>} cache database, or null when unavailable. */
+    function openCacheDb() {
+      if (typeof indexedDB === 'undefined') return Promise.resolve(null)
+      if (cacheDbPromise !== undefined) return cacheDbPromise
+      cacheDbPromise = new Promise((resolve) => {
+        try {
+          const request = indexedDB.open(CACHE_DB, 1)
+          request.onupgradeneeded = () => {
+            const db = request.result
+            if (!db.objectStoreNames.contains(CACHE_STORE)) db.createObjectStore(CACHE_STORE, { keyPath: 'id' })
+          }
+          request.onsuccess = () => resolve(request.result)
+          request.onerror = () => resolve(null)
+        } catch {
+          resolve(null)
+        }
+      })
+      return cacheDbPromise
+    }
+
+    /** @param {File} file @param {string} sessionId @returns {object} cache record. */
+    function cacheRecord(file, sessionId) {
+      return {
+        id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : String(Date.now()) + '-' + Math.random(),
+        sessionId,
+        name: typeof file.name === 'string' ? file.name : '',
+        size: typeof file.size === 'number' ? file.size : 0,
+        type: typeof file.type === 'string' ? file.type : '',
+        lastModified: typeof file.lastModified === 'number' ? file.lastModified : 0,
+        file,
+        cachedAt: Date.now(),
+      }
+    }
+
+    /**
+     * Remember selected files before the Host uploads them. Memory is written
+     * synchronously; IndexedDB persistence is best-effort.
+     * @param {string} sessionId - target conversation.
+     * @param {File[]} files - browser-selected files.
+     */
+    function rememberFiles(sessionId, files) {
+      if (!Array.isArray(files) || files.length === 0) return
+      const cutoff = Date.now() - CACHE_TTL_MS
+      for (let index = memoryCache.length - 1; index >= 0; index -= 1) {
+        if (memoryCache[index].cachedAt < cutoff) memoryCache.splice(index, 1)
+      }
+      const records = files.map((file) => cacheRecord(file, sessionId))
+      memoryCache.push(...records)
+      void (async () => {
+        const db = await openCacheDb()
+        if (db === null) return
+        try {
+          const tx = db.transaction(CACHE_STORE, 'readwrite')
+          const store = tx.objectStore(CACHE_STORE)
+          const request = store.getAll()
+          request.onsuccess = () => {
+            for (const record of request.result ?? []) {
+              if (record.cachedAt < cutoff) store.delete(record.id)
+            }
+          }
+          for (const record of records) store.put(record)
+        } catch {
+          // The in-memory copy keeps this page functional.
+        }
+      })()
+    }
+
+    /**
+     * Find the most recent cached file matching a queue attachment reference.
+     * @param {string} sessionId - conversation id.
+     * @param {string} name - original file name.
+     * @param {number} size - file size.
+     * @returns {Promise<object|null>} cache record.
+     */
+    async function findCachedFile(sessionId, name, size) {
+      const match = (record) => record.sessionId === sessionId
+        && record.name === name && record.size === size
+      const memory = [...memoryCache].reverse().find(match)
+      if (memory !== undefined) return memory
+      const db = await openCacheDb()
+      if (db === null) return null
+      return await new Promise((resolve) => {
+        try {
+          const request = db.transaction(CACHE_STORE, 'readonly').objectStore(CACHE_STORE).getAll()
+          request.onsuccess = () => resolve((request.result ?? []).reverse().find(match) ?? null)
+          request.onerror = () => resolve(null)
+        } catch {
+          resolve(null)
+        }
+      })
+    }
+
+    /** @param {object[]} records - cached records to remove. */
+    async function forgetCachedRecords(records) {
+      for (const record of records) {
+        const index = memoryCache.findIndex((candidate) => candidate.id === record.id)
+        if (index >= 0) memoryCache.splice(index, 1)
+      }
+      const db = await openCacheDb()
+      if (db === null) return
+      try {
+        const tx = db.transaction(CACHE_STORE, 'readwrite')
+        for (const record of records) tx.objectStore(CACHE_STORE).delete(record.id)
+      } catch {
+        // TTL cleanup will collect an unremovable persistence copy.
+      }
+    }
+
+    /**
+     * Drop caches for file references that left the Host queue (sent or
+     * removed). This implements the temporary-storage contract.
+     * @param {string} sessionId - conversation id.
+     * @param {Array<{name: string, size: number}>} refs - removed references.
+     */
+    async function forgetCachedRefs(sessionId, refs) {
+      if (!Array.isArray(refs) || refs.length === 0) return
+      const matches = memoryCache.filter((record) => record.sessionId === sessionId
+        && refs.some((ref) => record.name === ref.name && record.size === ref.size))
+      await forgetCachedRecords(matches)
+      const db = await openCacheDb()
+      if (db === null) return
+      try {
+        const request = db.transaction(CACHE_STORE, 'readonly').objectStore(CACHE_STORE).getAll()
+        request.onsuccess = () => {
+          const persisted = (request.result ?? []).filter((record) => record.sessionId === sessionId
+            && refs.some((ref) => record.name === ref.name && record.size === ref.size))
+          void forgetCachedRecords(persisted)
+        }
+      } catch {
+        // Best effort; stale records expire with the browser profile.
+      }
+    }
+
+    /**
+     * Wrap the conversation draft registry once so selected files are cached
+     * before upload. This is the only point that has the browser File objects.
+     * @param {object|undefined} conversation - conversation service.
+     */
+    function ensureDraftCacheHook(conversation) {
+      if (conversation === null || conversation === undefined) return
+      if (typeof conversation.createDrafts !== 'function') return
+      if (conversation.__dshQueueWithdrawCache === true) return
+      try {
+        const original = conversation.createDrafts.bind(conversation)
+        conversation.createDrafts = (sessionId, files) => {
+          const drafts = original(sessionId, files)
+          if (conversation.__dshQueueWithdrawRestoring !== true) rememberFiles(sessionId, files)
+          return drafts
+        }
+        conversation.__dshQueueWithdrawCache = true
+      } catch {
+        // A frozen service cannot be decorated; file attachments stay uncached.
+      }
+    }
+
+    /** @param {unknown} content @returns {Array<{type: string, ref: object}>} attachment blocks. */
+    function attachmentBlocksOf(content) {
+      if (!Array.isArray(content)) return []
+      const blocks = []
+      for (const block of content) {
+        if (block === null || typeof block !== 'object') continue
+        if (block.type !== 'image' && block.type !== 'file') continue
+        if (block.attachment !== null && typeof block.attachment === 'object') blocks.push({ type: block.type, ref: block.attachment })
+      }
+      return blocks
+    }
 
     /**
      * Join the text blocks of one queue message.
@@ -57,17 +235,17 @@ window.__ModuleLoader__.load({
     }
 
     /**
-     * Classify one queue message for withdrawal. Images can be rehydrated into
-     * browser draft files through the conversation draft registry; file
-     * attachments have no public bytes/restore path and stay unsupported.
+     * Classify one queue message for withdrawal. Images can be rehydrated
+     * through the attachment read API; files and images both prefer the
+     * temporary browser cache populated when they were selected.
      * @param {unknown} content - queue message content blocks.
-     * @returns {{text: string, images: Array<object>, unsupported: boolean}} plan.
+     * @returns {{text: string, attachments: Array<object>, unsupported: boolean}} plan.
      */
     function withdrawPlan(content) {
       const text = textOfContent(content)
-      const images = []
+      const attachments = []
       let unsupported = false
-      if (!Array.isArray(content)) return { text, images, unsupported: true }
+      if (!Array.isArray(content)) return { text, attachments, unsupported: true }
       for (const block of content) {
         if (block === null || typeof block !== 'object') {
           unsupported = true
@@ -75,12 +253,42 @@ window.__ModuleLoader__.load({
         }
         if (block.type === 'text') continue
         if (block.type === 'image' && typeof block.attachment?.attachmentId === 'string') {
-          images.push(block.attachment)
+          attachments.push({ type: 'image', ref: block.attachment })
+          continue
+        }
+        if (block.type === 'file' && typeof block.attachment?.name === 'string'
+          && typeof block.attachment?.bytes === 'number') {
+          attachments.push({ type: 'file', ref: block.attachment })
           continue
         }
         unsupported = true
       }
-      return { text, images, unsupported }
+      return { text, attachments, unsupported }
+    }
+
+    /**
+     * File references still present in a queue window.
+     * @param {object[]} queue - next-turn queue items.
+     * @returns {Array<{name: string, size: number}>} file references.
+     */
+    function queuedFileRefs(queue) {
+      const refs = []
+      for (const item of Array.isArray(queue) ? queue : []) {
+        for (const block of attachmentBlocksOf(item?.content)) {
+          if (block.type !== 'file') continue
+          refs.push({ name: String(block.ref.name ?? ''), size: Number(block.ref.bytes ?? 0) })
+        }
+      }
+      return refs
+    }
+
+    /** @param {object} record @param {string} fallbackName @returns {File} restored browser file. */
+    function fileFromCache(record, fallbackName) {
+      if (record.file instanceof File) return record.file
+      return new File([record.file], fallbackName, {
+        type: typeof record.type === 'string' ? record.type : '',
+        lastModified: typeof record.lastModified === 'number' ? record.lastModified : undefined,
+      })
     }
 
     /**
@@ -147,6 +355,13 @@ window.__ModuleLoader__.load({
       mutableRef.current = queueMutable
       actionsRef.current = actions
       tRef.current = t
+      const previousFileRefsRef = useRef([])
+      useEffect(() => {
+        const current = queuedFileRefs(queue)
+        const removed = previousFileRefsRef.current.filter((old) => !current.some((ref) => ref.name === old.name && ref.size === old.size))
+        if (removed.length > 0) void actionsRef.current.forgetCached?.(removed)
+        previousFileRefsRef.current = current
+      }, [queue])
 
       useEffect(() => {
         if (typeof document === 'undefined' || typeof MutationObserver !== 'function') return undefined
@@ -175,11 +390,13 @@ window.__ModuleLoader__.load({
           buttonItems.set(button, item)
           button.dataset.dshItemId = String(item.id)
           const plan = withdrawPlan(item.content)
-          const usable = !plan.unsupported && (plan.text !== '' || plan.images.length > 0)
+          const usable = !plan.unsupported && (plan.text !== '' || plan.attachments.length > 0)
           button.disabled = !usable
           button.title = !usable
             ? (plan.unsupported ? tRef.current('button.attachments') : tRef.current('button.empty'))
-            : tRef.current('button.tooltip')
+            : (plan.attachments.some?.((attachment) => attachment.type === 'file')
+              ? tRef.current('button.cacheHint')
+              : tRef.current('button.tooltip'))
           button.setAttribute?.('aria-label', button.title)
         }
         const createButton = (row, item, text) => {
@@ -203,6 +420,7 @@ window.__ModuleLoader__.load({
               tRef.current('button.empty'),
               tRef.current('button.failed'),
               tRef.current('button.attachments'),
+              tRef.current('button.cacheMissing'),
             )
             if (accepted !== true) button.disabled = false
           })
@@ -306,6 +524,7 @@ window.__ModuleLoader__.load({
             const scope = ctx.sessions.scope(sessionId)
             conversation = scope?.get('conversation')
             shell = conversation?.input?.for?.(scope)
+            ensureDraftCacheHook(conversation)
           } catch {
             conversation = undefined
             shell = undefined
@@ -320,6 +539,8 @@ window.__ModuleLoader__.load({
           return {
             sessionId,
             actions: {
+              /** Drop cache records for queue file references that left the queue. */
+              forgetCached: (refs) => { void forgetCachedRefs(sessionId, refs) },
               /**
                * Move one queued message into the draft and remove it from the
                * Host queue. The draft is written before removal and restored if
@@ -330,13 +551,13 @@ window.__ModuleLoader__.load({
                * @param {string} attachment - attachment notice.
                * @returns {Promise<boolean>} whether the item was withdrawn.
                */
-              withdraw: async (item, empty, failure, attachment) => {
+              withdraw: async (item, empty, failure, attachment, cacheMissing = attachment) => {
                 const plan = withdrawPlan(item?.content)
                 if (plan.unsupported) {
                   notify('error', attachment)
                   return false
                 }
-                if (plan.text === '' && plan.images.length === 0) {
+                if (plan.text === '' && plan.attachments.length === 0) {
                   notify('error', empty)
                   return false
                 }
@@ -366,21 +587,41 @@ window.__ModuleLoader__.load({
                     try { shell?.actions?.setDraft?.(previousDraft) } catch { /* best-effort restore */ }
                   }
                 }
-                if (plan.images.length > 0) {
+                const cachedRecords = []
+                if (plan.attachments.length > 0) {
                   try {
                     if (typeof conversation?.createDrafts !== 'function'
                       || typeof shell?.actions?.addAttachments !== 'function'
                       || typeof File !== 'function') return false
                     const files = []
-                    for (const image of plan.images) {
-                      const result = await session.readAttachment(image.attachmentId)
+                    for (const block of plan.attachments) {
+                      const ref = block.ref
+                      const name = typeof ref.name === 'string' ? ref.name : ''
+                      const size = typeof ref.bytes === 'number' ? ref.bytes : 0
+                      const cached = name === '' ? null : await findCachedFile(sessionId, name, size)
+                      if (cached !== null) {
+                        cachedRecords.push(cached)
+                        files.push(fileFromCache(cached, name))
+                        continue
+                      }
+                      if (block.type !== 'image' || typeof session.readAttachment !== 'function') {
+                        notify('error', cacheMissing)
+                        return false
+                      }
+                      const result = await session.readAttachment(ref.attachmentId)
                       if (result?.ok !== true) throw new Error('image read failed')
-                      const mediaType = result.value?.attachment?.mediaType ?? image.mediaType
+                      const mediaType = result.value?.attachment?.mediaType ?? ref.mediaType
                       if (typeof mediaType !== 'string' || !mediaType.startsWith('image/')) throw new Error('not an image')
-                      const name = result.value?.attachment?.name ?? image.name ?? 'withdrawn-image'
-                      files.push(new File([result.value.data], name, { type: mediaType }))
+                      const fallbackName = result.value?.attachment?.name ?? ref.name ?? 'withdrawn-image'
+                      files.push(new File([result.value.data], fallbackName, { type: mediaType }))
                     }
-                    const drafts = conversation.createDrafts(sessionId, files)
+                    let drafts
+                    try {
+                      conversation.__dshQueueWithdrawRestoring = true
+                      drafts = conversation.createDrafts(sessionId, files)
+                    } finally {
+                      conversation.__dshQueueWithdrawRestoring = false
+                    }
                     for (const draft of drafts) {
                       if (draft?.id !== undefined) addedIds.push(draft.id)
                     }
@@ -416,6 +657,7 @@ window.__ModuleLoader__.load({
                   // The queue row disappearing and the draft appearing are the
                   // feedback; an info notice would linger in the Host's notice
                   // surface and is unnecessary for a successful withdraw.
+                  if (cachedRecords.length > 0) await forgetCachedRecords(cachedRecords)
                   return true
                 } catch {
                   rollback()
