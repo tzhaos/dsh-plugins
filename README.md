@@ -35,7 +35,7 @@ monorepo。九个 package 可以一起安装，也可以单独安装、单独启
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | 停止/报错/截断后把发送按钮变成播放键 | 1.1.1 | 19 |
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 把排队消息撤回输入栏，撤回按钮放在行首左侧 | 1.2.1 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
-| [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | 超长文本粘贴为 `.txt` 附件 | 1.0.0 | 14 |
+| [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | 超长文本粘贴为 `.txt` 附件，可展开回输入框 | 1.1.0 | 15 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.1.0 | 11 |
 
 全部 package 合计 **213 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
@@ -411,8 +411,9 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-quick-fo
 超长文本粘贴时不再塞满输入框，而是作为 `.txt` 附件加入草稿。
 
 - 输入框内纯文本粘贴达到 2000 字符时拦截默认插入
-- 通过会话草稿注册表创建 `Pasted text (N chars).txt`
+- 通过会话草稿注册表创建 `Pasted text (N chars) N.txt`
 - 附件由 DSH 正常上传、展示和发送
+- 附件卡片旁提供 **在文本框中显示**：移除附件并把完整文本放回输入框
 - 短文本、图片/文件粘贴、排队编辑框和其他会话不处理
 
 **限制：** 模型收到的是文件附件而不是内联文本；阈值固定 2000 字符。
@@ -463,7 +464,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-continue` | 19 |
 | `dsh-queue-withdraw` | 19 |
 | `dsh-tab-middle-click` | 13 |
-| `dsh-long-paste` | 14 |
+| `dsh-long-paste` | 15 |
 | `dsh-quick-fork` | 11 |
 
 ## 隐私与数据

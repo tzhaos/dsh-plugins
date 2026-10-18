@@ -32,7 +32,8 @@ package's own `CHANGELOG.md`.
 - `dsh-sidebar-sections` 2.4.0 now offers safe delete from every conversation row, not only archived rows.
 - `dsh-queue-withdraw` 1.2.1 moved its action from the right action cluster to the queue row leading
   edge, away from edit/delete/steer.
-- Added `dsh-long-paste` 1.0.0: long composer pastes become text-file attachments.
+- Added `dsh-long-paste` 1.0.0: long composer pastes become text-file attachments; 1.1.0 adds
+  **Show in text field** to expand an attachment back into the composer.
 - Added `dsh-tab-middle-click` 1.0.0: middle-click closes a sidebar/dock tab through its existing
   close control.
 - Clarified that `dsh plugin` only forwards to pnpm: it installs the package but does not register the

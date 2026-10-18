@@ -38,7 +38,7 @@ sessions, or reimplement the agent.
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | Play control in the send button after a stop/error/truncation | 1.1.1 | 19 |
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Withdraw queued messages, with the action on the row leading edge | 1.2.1 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
-| [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | Turn very long pasted plain text into a `.txt` attachment | 1.0.0 | 14 |
+| [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | Turn long pasted text into a `.txt` attachment, expandable back into the composer | 1.1.0 | 15 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.1.0 | 11 |
 
 All packages: **213 zero-dependency checks**; no build step, no runtime npm dependencies.
@@ -432,8 +432,9 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-quick-fo
 Very long plain-text pastes become a `.txt` attachment instead of filling the composer.
 
 - Intercepts composer plain-text paste at or above 2,000 characters
-- Creates a `Pasted text (N chars).txt` file through the conversation draft registry
+- Creates a `Pasted text (N chars) N.txt` file through the conversation draft registry
 - DSH uploads, displays and sends the attachment normally
+- The attachment card offers **Show in text field**: remove it and put the full text back into the composer
 - Short text, image/file paste, queue editor and other conversations are left alone
 
 **Limitations:** the model receives a file attachment rather than inline text; the threshold is fixed
@@ -487,7 +488,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-continue` | 19 |
 | `dsh-queue-withdraw` | 19 |
 | `dsh-tab-middle-click` | 13 |
-| `dsh-long-paste` | 14 |
+| `dsh-long-paste` | 15 |
 | `dsh-quick-fork` | 11 |
 
 ## Privacy and data
