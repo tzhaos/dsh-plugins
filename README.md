@@ -441,6 +441,6 @@ node scripts/install-all.mjs --profile "<profile 目录>"
 
 ## 迁移与许可证
 
-本仓库以新历史合并了原独立插件仓库，映射见 [MIGRATION.md](MIGRATION.md)。旧目录保留作为归档。
+本仓库以新历史合并过独立插件仓库，现在又拆回各自的独立仓库，并通过 Git submodule 引用；映射与迁移过程见 [MIGRATION.md](MIGRATION.md)。
 
 [MIT](LICENSE)。每个 package 内也有 LICENSE 副本。

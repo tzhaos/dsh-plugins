@@ -465,7 +465,7 @@ commit and tag the package. The root `CHANGELOG.md` records repository-level cha
 
 ## Migration and license
 
-This repository starts with a fresh history and consolidates the previous standalone repositories;
-see [MIGRATION.md](MIGRATION.md). Old directories remain as an archive.
+This repository once consolidated the standalone plugins, then split them back into independent
+repositories referenced as Git submodules; see [MIGRATION.md](MIGRATION.md).
 
 [MIT](LICENSE). Each package also includes a LICENSE copy.
