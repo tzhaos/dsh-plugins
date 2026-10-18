@@ -3,6 +3,16 @@
 All repository-level changes are documented here. User-visible plugin changes live in each
 package's own `CHANGELOG.md`.
 
+## [Unreleased]
+
+### Changed
+
+- Expanded `README.md` and `README.en.md` into a full per-plugin guide: problem statement, features,
+  usage, install command, data boundaries, limitations and package-level documentation links for each
+  of the six plugins.
+- Added a quick-start section for the monorepo installer and individual `plugin_manager` install
+  commands, plus compatibility, verification, privacy and development sections.
+
 ## [1.0.0] - 2026-10-18
 
 ### Added
