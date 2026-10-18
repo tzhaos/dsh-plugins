@@ -34,3 +34,7 @@
 	path = packages/dsh-long-paste
 	url = https://github.com/tzhaos/dsh-long-paste.git
 	branch = main
+[submodule "packages/dsh-sidebar-file-drop"]
+	path = packages/dsh-sidebar-file-drop
+	url = https://github.com/tzhaos/dsh-sidebar-file-drop.git
+	branch = main

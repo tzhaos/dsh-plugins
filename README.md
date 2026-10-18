@@ -2,7 +2,7 @@
 
 # DSH Plugins
 
-**九个独立的 DeepSeek Harness Web 客户端插件。**
+**十个独立的 DeepSeek Harness Web 客户端插件。**
 
 侧边栏分区 · 文件链接右键 · 输入历史 · Hover · 一键继续 · 排队消息撤回 · 标签中键关闭 · 划选复创
 
@@ -22,7 +22,7 @@
 ## 这是什么
 
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）Web 客户端插件
-monorepo。九个 package 可以一起安装，也可以单独安装、单独启停；每个仍然是完整 DSH bundle。
+monorepo。十个 package 可以一起安装，也可以单独安装、单独启停；每个仍然是完整 DSH bundle。
 
 它们只补日常交互中缺失的动作，不替换宿主组件，不接管会话，也不重新实现 Agent。
 
@@ -36,6 +36,7 @@ monorepo。九个 package 可以一起安装，也可以单独安装、单独启
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 把排队消息撤回输入栏，撤回按钮放在行首左侧 | 1.2.1 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | 超长文本粘贴为 `.txt` 附件，可展开回输入框 | 1.1.0 | 15 |
+| [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | 从侧边栏文件列表拖文件到输入框 | 1.0.0 | 13 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.1.0 | 11 |
 
 全部 package 合计 **213 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
@@ -71,7 +72,7 @@ git submodule update --init --recursive
 git clone --recurse-submodules https://github.com/tzhaos/dsh-plugins.git
 cd dsh-plugins
 node scripts/install-all.mjs --dry-run   # 先看会改什么
-node scripts/install-all.mjs             # 写入 profile 并链接九个 package
+node scripts/install-all.mjs             # 写入 profile 并链接十个 package
 ```
 
 已经在本地 `D:\dsh-plugins\dsh-plugins` 的话，直接从 `node scripts/install-all.mjs` 开始。
@@ -85,7 +86,7 @@ node scripts/install-all.mjs             # 写入 profile 并链接九个 packag
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-`target` 必须是绝对路径。九个 target：
+`target` 必须是绝对路径。十个 target：
 
 ```text
 <monorepo>/packages/dsh-sidebar-sections
@@ -97,6 +98,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 <monorepo>/packages/dsh-tab-middle-click
 <monorepo>/packages/dsh-quick-fork
 <monorepo>/packages/dsh-long-paste
+<monorepo>/packages/dsh-sidebar-file-drop
 ```
 
 ### 用 `dsh plugin` CLI 单独安装
@@ -426,11 +428,30 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-long-pas
 
 ---
 
+### dsh-sidebar-file-drop
+
+从侧边栏文件列表把文件拖进输入框，作为文件引用附件。
+
+- 带绝对路径的侧栏文件行自动变为可拖拽
+- 拖到当前会话 composer 时插入文件引用 chip
+- 路径优先转换为当前工作区相对路径
+- 原生文件拖拽仍走 DSH 上传路径
+
+**限制：** 文件行必须提供绝对路径（`title` / `aria-label` / `data-path`）；生成的是引用，不是上传副本。
+
+```text
+plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-sidebar-file-drop")
+```
+
+[详细文档](https://github.com/tzhaos/dsh-sidebar-file-drop#readme) · [English](https://github.com/tzhaos/dsh-sidebar-file-drop/blob/main/README.en.md)
+
+---
+
 ## 仓库结构
 
 ```text
 .
-├── packages/          # 九个完整 DSH bundle
+├── packages/          # 十个完整 DSH bundle
 ├── scripts/
 │   ├── check-all.mjs
 │   └── install-all.mjs
@@ -465,6 +486,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-queue-withdraw` | 19 |
 | `dsh-tab-middle-click` | 13 |
 | `dsh-long-paste` | 15 |
+| `dsh-sidebar-file-drop` | 13 |
 | `dsh-quick-fork` | 11 |
 
 ## 隐私与数据

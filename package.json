@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "A monorepo of small DeepSeek Harness client plugins: sidebar sections, file links, composer history, hover polish, continue, queue withdraw, tab middle-click, quick fork and long-paste attachments.",
+  "description": "A monorepo of small DeepSeek Harness client plugins: sidebar sections, file links, composer history, hover polish, continue, queue withdraw, tab middle-click, quick fork, long-paste attachments and sidebar file drag.",
   "scripts": {
     "check": "node scripts/check-all.mjs",
     "install:all": "node scripts/install-all.mjs",
