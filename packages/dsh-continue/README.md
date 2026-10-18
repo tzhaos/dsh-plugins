@@ -3,11 +3,10 @@
 简体中文 | [English](README.en.md)
 
 一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 客户端插件：对话任务
-正常结束或被停止后，在发送按钮旁增加一个 **继续** 按钮。点一下就会继续上一轮任务，不必再手动输入
-“继续”。
+正常结束或被停止后，输入框为空时**发送按钮会变成播放键**。点一下就会继续上一轮任务，不必再手动输入“继续”。
 
 ![DeepSeek Harness](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.1.0-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-18-brightgreen)
@@ -19,8 +18,9 @@
 
 `dsh-continue` 把这一步变成一个按钮：
 
-- 对话空闲、最后一轮已经到达终止状态时，在输入区右侧显示 **继续**
-- 正常完成（`completed`）、用户停止、异常结束或尾部只有 `turn/start` 的中断状态都会显示
+- 对话空闲、输入框为空、最后一轮已经到达终止状态时，**发送按钮本身变成播放图标**
+- 正常完成（`completed`）、用户停止、异常结束或尾部只有 `turn/start` 的中断状态都会出现
+- 输入文字或添加附件后立即恢复普通发送按钮，不会遮挡正常发送
 - 点击后直接通过当前 Session 的 `prompt()` 提交一条普通的排队提示词
 - 不需要先填入草稿、不需要附件、也不触发发送按钮以外的流程
 
@@ -32,19 +32,20 @@
 - `running === false`
 - 没有待提交/排队中的本地提交
 - 最后一轮是 `turn/end`，或最后一轮只有 `turn/start`（异常中断）
+- 输入框没有文字和附件（Host 的主发送按钮处于 disabled 状态）
 - 不是子智能体会话
 
 任务运行中、对话正在加载、会话被移除时按钮隐藏。
 
 ## 行为
 
-点击 **继续** 会：
+点击播放键会：
 
 1. 通过 `sessions.binding(sessionId).session` 取得当前 Session；
 2. 调用 `beginSubmission({ mode: 'queue', text })` 建立本地提交回显；
 3. 调用 `session.prompt([{ type: 'text', text }], 'queue', undefined, requestId)`；
-4. Host 接受后按钮进入“正在继续…”并等待运行状态接管；
-5. 失败时按钮恢复，并在 tooltip 中提示重试。
+4. Host 接受后播放键暂时隐藏，等待运行状态接管；
+5. 失败时播放键恢复，并在 tooltip 中提示重试。
 
 提交的是普通用户提示词：中文界面发送 `继续`，英文界面发送 `Continue`。它不绕过 Host 的
 Session 日志、队列或运行生命周期。
@@ -88,7 +89,7 @@ plugin_manager(action="install_bundle", target="<本目录的绝对路径>")
 1. 通过 `useSession` 读取当前会话的 `running` / `blank` / `openState` / `subagent` /
    `pendingSubmissions`；
 2. 注入的 `turnState()` 从 Session 事件窗口反向查找最后一个 `turn/start` 或 `turn/end`；
-3. 终态且空闲时渲染一个紧凑的 **继续** 按钮；
+3. 终态、空闲且输入框为空时，在 Host 主发送按钮的位置覆盖一个播放键；
 4. 点击后使用当前 Session 的公开 `prompt()` 接口提交，不修改会话 Store，不写额外的远端接口。
 
 ## 已知限制

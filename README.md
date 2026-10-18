@@ -19,7 +19,7 @@
 | [`dsh-file-link-actions`](packages/dsh-file-link-actions) | 1.0.0 | 20 | 对话里的文件链接右键菜单：默认应用打开、显示所在文件夹、复制路径。 |
 | [`dsh-composer-history`](packages/dsh-composer-history) | 1.2.0 | 29 | 输入框历史输入：搜索、直接按 `↑` 取回、面板清空，设置页可查看/删除/清空。 |
 | [`dsh-hover-polish`](packages/dsh-hover-polish) | 1.0.11 | 34 | 统一按钮与标签页 hover、Codex 风格 Tooltip、解释性气泡、完整标签标题和快捷键去重。 |
-| [`dsh-continue`](packages/dsh-continue) | 1.0.0 | 18 | 正常结束或中断的对话在输入区显示「继续」，一键提交，无需手动输入。 |
+| [`dsh-continue`](packages/dsh-continue) | 1.1.0 | 18 | 正常结束或中断的对话在输入框为空时把发送按钮变为播放键，一键继续。 |
 | [`dsh-queue-withdraw`](packages/dsh-queue-withdraw) | 1.1.1 | 17 | 把排队消息撤回输入栏：文本和图片回填草稿并从队列移除；文件附件仍受 Host API 限制。 |
 
 全部测试合计 **185 项**，零运行时依赖。
