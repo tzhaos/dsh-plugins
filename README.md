@@ -74,7 +74,59 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 node scripts/check-all.mjs
 ```
 
+## 更新
+
+当前仓库还没有发布到 Git / npm，所以还没有“应用商店一键更新”。按安装方式更新：
+
+### 方式一：monorepo 的 path-link 安装
+
+```powershell
+cd D:\dsh-plugins\dsh-plugins
+git status --short          # 确认没有未提交改动
+git pull --ff-only          # 仓库配置 remote 后使用；现在可手动替换目录
+node scripts/install-all.mjs
+# 完全退出 DSH，再重新启动
+```
+
+- package 是路径链接：`client.js` 等源码更新后，**必须完整重启 DSH**，不要只刷新页面
+- 重新运行 `install-all.mjs` 会校正 junction、依赖和 `dsh.profile.bundles`
+- 新增/删除插件包，或修改 bundle 列表后，必须重新运行安装脚本
+- 只更新单个 package 的源码时，重启通常就够了；安装脚本是幂等的，可以随时重跑
+
+### 方式二：Plugin Manager 安装
+
+如果之前是通过 `plugin_manager install_bundle` 安装的，版本或目录发生变化时：
+
+```text
+plugin_manager(action="remove_bundle", target="dsh-hover-polish")
+plugin_manager(action="install_bundle", target="<新版本目录的绝对路径>")
+```
+
+然后完全退出 DSH 再启动。`install_bundle` 对已存在的同名 bundle 会返回
+`already-installed`，所以升级版本通常需要先移除。
+
+如果只是同一个目录下的源码更新，DSH 重启后会读取新文件；只有路径、版本或
+`cordis.patch.yml` 变化时才需要重新安装。
+
+### 以后发布到 Git / npm 后
+
+如果插件改为从 Git 或 npm 安装，按其安装方式重新拉取/安装，再完整重启 DSH：
+
+```text
+dsh plugin --profile desktop add <新版本 spec>
+```
+
+不要依赖页面热刷新来加载新的 client bundle；DSH 的浏览器半部只在启动时加载。
+
+### 更新会保留什么
+
+- 侧边栏排序/折叠、输入历史、安全删除记录：保留在浏览器 `localStorage`
+- 排队撤回的文件缓存：保留在 `IndexedDB`，但只对仍在队列中的消息有效
+- 会话、消息、Agent 结果：始终由 DSH 管理，不会被插件更新修改
+- 清理浏览器站点数据或换设备会丢失本地视图状态
+
 ## 兼容性
+
 
 | 项目 | 值 |
 |---|---|

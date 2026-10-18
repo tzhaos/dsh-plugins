@@ -18,6 +18,8 @@ package's own `CHANGELOG.md`.
   the current 2.3.0 sidebar UI.
 - Removed the generated UI mockups from package and root READMEs. Image slots now require real
   screenshots captured from the running UI; drawn approximations are not used as documentation.
+- Documented how to update an installed plugin for path-link and Plugin Manager installs, including
+  the required full DSH restart and preserved local data.
 
 ## [1.0.0] - 2026-10-18
 

@@ -77,7 +77,63 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 node scripts/check-all.mjs
 ```
 
+## Updating
+
+This repository is not yet published to Git or npm, so there is no one-click app-store update.
+Update according to how you installed the plugins.
+
+### Option 1: monorepo path-link install
+
+```powershell
+cd D:\dsh-plugins\dsh-plugins
+git status --short          # make sure there are no local changes to lose
+git pull --ff-only          # once a remote exists; otherwise replace the directory manually
+node scripts/install-all.mjs
+# fully quit DSH, then start it again
+```
+
+- packages are path-linked: after `client.js` or other source changes, **fully restart DSH**; a page
+  refresh is not enough
+- `install-all.mjs` re-checks junctions, dependencies and `dsh.profile.bundles`
+- adding/removing a package or changing the bundle list requires re-running the installer
+- when only one package's source changed, a restart is usually enough; the installer is idempotent
+
+### Option 2: Plugin Manager install
+
+If the bundle was installed through `plugin_manager install_bundle`, reinstall it when the version or
+directory changes:
+
+```text
+plugin_manager(action="remove_bundle", target="dsh-hover-polish")
+plugin_manager(action="install_bundle", target="<absolute path of the new version>")
+```
+
+Then fully quit and relaunch DSH. `install_bundle` answers `already-installed` for a bundle that is
+already present, so version upgrades normally need a remove first.
+
+If only files in the same linked directory changed, a DSH restart is enough; reinstall when the path,
+version or `cordis.patch.yml` changes.
+
+### After a Git / npm release
+
+If the plugins later move to Git or npm installs, update with that installation method and fully
+restart DSH:
+
+```text
+dsh plugin --profile desktop add <new version spec>
+```
+
+Do not rely on a page refresh to load a new client bundle; the browser half loads at DSH startup.
+
+### What updates preserve
+
+- sidebar ordering/collapse, composer history and safe-delete records stay in browser `localStorage`
+- the queue-withdraw file cache stays in `IndexedDB`, but only applies while the message is queued
+- sessions, messages and agent results stay under DSH control and are never changed by an update
+- clearing site data or switching browsers loses local view state
+
 ## Compatibility
+
 
 | Item | Value |
 |---|---|
