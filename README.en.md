@@ -39,7 +39,7 @@ sessions, or reimplement the agent.
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Withdraw queued messages, with the action on the row leading edge | 1.2.1 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | Turn long pasted text into a `.txt` attachment, expandable back into the composer | 1.1.0 | 15 |
-| [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | Drag a sidebar file into the composer as a reference | 1.0.0 | 13 |
+| [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | Drag a sidebar file into the composer as a reference and bridge Desktop file paths | 1.1.0 | 15 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.1.0 | 11 |
 
 All packages: **213 zero-dependency checks**; no build step, no runtime npm dependencies.
@@ -457,7 +457,8 @@ Drag files from a sidebar file tree into the composer as file references.
 - Path-bearing sidebar file rows become draggable
 - Dropping on the current composer inserts a file-reference chip
 - Paths are converted to workspace-relative paths when possible
-- Native file drags keep DSH's upload path
+- On Desktop, `__DSH_DESKTOP_FILE_PATH__` is bridged to the composer's `__DSH_HOST_PATHS__`, so non-image files can become `@path` references instead of uploads
+- Native image drags keep DSH's upload path
 
 **Limitations:** the row must expose an absolute path (`title` / `aria-label` / `data-path`); the
 result is a reference, not an uploaded copy.
@@ -511,7 +512,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-queue-withdraw` | 19 |
 | `dsh-tab-middle-click` | 13 |
 | `dsh-long-paste` | 15 |
-| `dsh-sidebar-file-drop` | 13 |
+| `dsh-sidebar-file-drop` | 15 |
 | `dsh-quick-fork` | 11 |
 
 ## Privacy and data

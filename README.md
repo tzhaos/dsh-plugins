@@ -36,7 +36,7 @@ monorepo。十个 package 可以一起安装，也可以单独安装、单独启
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 把排队消息撤回输入栏，撤回按钮放在行首左侧 | 1.2.1 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | 超长文本粘贴为 `.txt` 附件，可展开回输入框 | 1.1.0 | 15 |
-| [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | 从侧边栏文件列表拖文件到输入框 | 1.0.0 | 13 |
+| [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | 从侧边栏文件列表拖文件到输入框，并桥接 Desktop 文件路径 | 1.1.0 | 15 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.1.0 | 11 |
 
 全部 package 合计 **213 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
@@ -435,7 +435,8 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-long-pas
 - 带绝对路径的侧栏文件行自动变为可拖拽
 - 拖到当前会话 composer 时插入文件引用 chip
 - 路径优先转换为当前工作区相对路径
-- 原生文件拖拽仍走 DSH 上传路径
+- Desktop 上把 `__DSH_DESKTOP_FILE_PATH__` 桥接到 composer 的 `__DSH_HOST_PATHS__`，非图片文件可变成 `@路径` 而非上传副本
+- 原生图片仍走 DSH 上传路径
 
 **限制：** 文件行必须提供绝对路径（`title` / `aria-label` / `data-path`）；生成的是引用，不是上传副本。
 
@@ -486,7 +487,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-queue-withdraw` | 19 |
 | `dsh-tab-middle-click` | 13 |
 | `dsh-long-paste` | 15 |
-| `dsh-sidebar-file-drop` | 13 |
+| `dsh-sidebar-file-drop` | 15 |
 | `dsh-quick-fork` | 11 |
 
 ## 隐私与数据
