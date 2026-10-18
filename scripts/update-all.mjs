@@ -48,6 +48,12 @@ if (!noPull) {
   }
 }
 
+if (run('git', ['submodule', 'sync', '--recursive']) !== 0
+  || run('git', ['submodule', 'update', '--init', '--recursive']) !== 0) {
+  console.error('submodule update failed; resolve it and rerun')
+  process.exit(1)
+}
+
 if (run(process.execPath, ['scripts/install-all.mjs']) !== 0) {
   console.error('install-all failed')
   process.exit(1)

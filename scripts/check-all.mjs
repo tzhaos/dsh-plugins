@@ -19,7 +19,7 @@ const packages = readdirSync(PACKAGES_DIR)
   .sort()
 
 if (packages.length === 0) {
-  console.error('no packages found under packages/')
+  console.error('no packages found under packages/; run: git submodule update --init --recursive')
   process.exit(1)
 }
 

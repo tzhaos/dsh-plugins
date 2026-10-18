@@ -31,15 +31,36 @@ sessions, or reimplement the agent.
 
 | Plugin | One line | Version | Checks |
 |---|---|---|---|
-| [`dsh-sidebar-sections`](packages/dsh-sidebar-sections) | Pinned / Projects / Recent / Archived sidebar | 2.3.0 | 67 |
-| [`dsh-file-link-actions`](packages/dsh-file-link-actions) | File-link context menu: default app, reveal folder, copy path | 1.0.0 | 20 |
-| [`dsh-composer-history`](packages/dsh-composer-history) | Searchable composer history with `↑` recall | 1.2.0 | 29 |
-| [`dsh-hover-polish`](packages/dsh-hover-polish) | Unified button/tab hover and Codex-style tooltips | 1.0.11 | 34 |
-| [`dsh-continue`](packages/dsh-continue) | Play control in the send button after a stop/error/truncation | 1.1.1 | 19 |
-| [`dsh-queue-withdraw`](packages/dsh-queue-withdraw) | Withdraw queued messages back into the composer | 1.2.0 | 19 |
-| [`dsh-tab-middle-click`](packages/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
+| [`dsh-sidebar-sections`](https://github.com/tzhaos/dsh-sidebar-sections) | Pinned / Projects / Recent / Archived sidebar | 2.3.0 | 67 |
+| [`dsh-file-link-actions`](https://github.com/tzhaos/dsh-file-link-actions) | File-link context menu: default app, reveal folder, copy path | 1.0.0 | 20 |
+| [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | Searchable composer history with `↑` recall | 1.2.0 | 29 |
+| [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | Unified button/tab hover and Codex-style tooltips | 1.0.11 | 34 |
+| [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | Play control in the send button after a stop/error/truncation | 1.1.1 | 19 |
+| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Withdraw queued messages back into the composer | 1.2.0 | 19 |
+| [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 
 All packages: **201 zero-dependency checks**; no build step, no runtime npm dependencies.
+
+## Agent install prompt
+
+Send an agent the repository URL and the task below to fetch every plugin in one go:
+
+```text
+Clone https://github.com/tzhaos/dsh-plugins with submodules:
+
+git clone --recurse-submodules https://github.com/tzhaos/dsh-plugins.git
+cd dsh-plugins
+node scripts/check-all.mjs
+node scripts/install-all.mjs
+
+Then fully quit DeepSeek Harness and start it again.
+```
+
+If the repository was cloned without submodules:
+
+```powershell
+git submodule update --init --recursive
+```
 
 ## Quick start
 
@@ -48,7 +69,7 @@ All packages: **201 zero-dependency checks**; no build step, no runtime npm depe
 Clone from GitHub:
 
 ```powershell
-git clone https://github.com/tzhaos/dsh-plugins.git
+git clone --recurse-submodules https://github.com/tzhaos/dsh-plugins.git
 cd dsh-plugins
 node scripts/install-all.mjs --dry-run
 node scripts/install-all.mjs
@@ -82,7 +103,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 `dsh plugin` forwards to pnpm, so it **can** install one local package:
 
 ```powershell
-git clone https://github.com/tzhaos/dsh-plugins.git
+git clone --recurse-submodules https://github.com/tzhaos/dsh-plugins.git
 dsh plugin --profile desktop add "D:\dsh-plugins\dsh-plugins\packages\dsh-hover-polish"
 ```
 
@@ -115,7 +136,7 @@ node scripts/update-all.mjs
 # fully quit DSH, then start it again
 ```
 
-The script checks the working tree, runs `git pull --ff-only`, then runs `install-all.mjs`. Options:
+The script checks the working tree, runs `git pull --ff-only`, syncs and initializes submodules, then runs `install-all.mjs`. Options:
 
 ```powershell
 node scripts/update-all.mjs --dry-run   # print the plan only
@@ -127,6 +148,7 @@ Manual equivalent:
 ```powershell
 git status --short          # make sure there are no local changes to lose
 git pull --ff-only
+git submodule update --init --recursive
 node scripts/install-all.mjs
 ```
 
@@ -196,12 +218,12 @@ DSH is pre-stable; client APIs, slots and DOM contracts may change between relea
 
 ### dsh-sidebar-sections
 
-[![version](https://img.shields.io/badge/version-2.3.0-blue)](packages/dsh-sidebar-sections)
-[![checks](https://img.shields.io/badge/checks-67-brightgreen)](packages/dsh-sidebar-sections/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-2.3.0-blue)](https://github.com/tzhaos/dsh-sidebar-sections)
+[![checks](https://img.shields.io/badge/checks-67-brightgreen)](https://github.com/tzhaos/dsh-sidebar-sections/blob/main/scripts/check.mjs)
 
 Turns the sidebar into four first-class sections: **Pinned / Projects / Recent / Archived**.
 
-![dsh-sidebar-sections 2.3.0: four sidebar sections, section menu and project menu](packages/dsh-sidebar-sections/docs/screenshot.png)
+![dsh-sidebar-sections 2.3.0: four sidebar sections, section menu and project menu](https://raw.githubusercontent.com/tzhaos/dsh-sidebar-sections/main/docs/screenshot.png)
 
 *Image notes: left is the four-section Pinned / Projects / Recent / Archived sidebar; middle is the section menu for grouping and ordering; right is the project menu with reveal, rename and delete actions. The screenshot reflects the current 2.3.0 UI.*
 
@@ -226,14 +248,14 @@ the loaded event window may not appear.
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-sidebar-sections")
 ```
 
-[Docs](packages/dsh-sidebar-sections/README.en.md) · [中文](packages/dsh-sidebar-sections/README.md)
+[Docs](https://github.com/tzhaos/dsh-sidebar-sections/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-sidebar-sections#readme)
 
 ---
 
 ### dsh-file-link-actions
 
-[![version](https://img.shields.io/badge/version-1.0.0-blue)](packages/dsh-file-link-actions)
-[![checks](https://img.shields.io/badge/checks-20-brightgreen)](packages/dsh-file-link-actions/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/tzhaos/dsh-file-link-actions)
+[![checks](https://img.shields.io/badge/checks-20-brightgreen)](https://github.com/tzhaos/dsh-file-link-actions/blob/main/scripts/check.mjs)
 
 Adds a **context menu** to local file links in conversations.
 
@@ -252,14 +274,14 @@ Adds a **context menu** to local file links in conversations.
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-file-link-actions")
 ```
 
-[Docs](packages/dsh-file-link-actions/README.en.md) · [中文](packages/dsh-file-link-actions/README.md)
+[Docs](https://github.com/tzhaos/dsh-file-link-actions/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-file-link-actions#readme)
 
 ---
 
 ### dsh-composer-history
 
-[![version](https://img.shields.io/badge/version-1.2.0-blue)](packages/dsh-composer-history)
-[![checks](https://img.shields.io/badge/checks-29-brightgreen)](packages/dsh-composer-history/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.2.0-blue)](https://github.com/tzhaos/dsh-composer-history)
+[![checks](https://img.shields.io/badge/checks-29-brightgreen)](https://github.com/tzhaos/dsh-composer-history/blob/main/scripts/check.mjs)
 
 Adds **searchable composer history** with quick recall.
 
@@ -279,14 +301,14 @@ Session logs; state is lost after clearing site data or switching devices.
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-composer-history")
 ```
 
-[Docs](packages/dsh-composer-history/README.en.md) · [中文](packages/dsh-composer-history/README.md)
+[Docs](https://github.com/tzhaos/dsh-composer-history/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-composer-history#readme)
 
 ---
 
 ### dsh-hover-polish
 
-[![version](https://img.shields.io/badge/version-1.0.11-blue)](packages/dsh-hover-polish)
-[![checks](https://img.shields.io/badge/checks-34-brightgreen)](packages/dsh-hover-polish/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.0.11-blue)](https://github.com/tzhaos/dsh-hover-polish)
+[![checks](https://img.shields.io/badge/checks-34-brightgreen)](https://github.com/tzhaos/dsh-hover-polish/blob/main/scripts/check.mjs)
 
 Unifies button/tab hover feedback and gives icon buttons Codex-style tooltips.
 
@@ -303,14 +325,14 @@ Unifies button/tab hover feedback and gives icon buttons Codex-style tooltips.
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-[Docs](packages/dsh-hover-polish/README.en.md) · [中文](packages/dsh-hover-polish/README.md)
+[Docs](https://github.com/tzhaos/dsh-hover-polish/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-hover-polish#readme)
 
 ---
 
 ### dsh-continue
 
-[![version](https://img.shields.io/badge/version-1.1.1-blue)](packages/dsh-continue)
-[![checks](https://img.shields.io/badge/checks-19-brightgreen)](packages/dsh-continue/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.1.1-blue)](https://github.com/tzhaos/dsh-continue)
+[![checks](https://img.shields.io/badge/checks-19-brightgreen)](https://github.com/tzhaos/dsh-continue/blob/main/scripts/check.mjs)
 
 After a task is **stopped, errors or is truncated**, an empty composer's send button becomes a play
 control.
@@ -329,14 +351,14 @@ changes may need adaptation.
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue")
 ```
 
-[Docs](packages/dsh-continue/README.en.md) · [中文](packages/dsh-continue/README.md)
+[Docs](https://github.com/tzhaos/dsh-continue/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-continue#readme)
 
 ---
 
 ### dsh-queue-withdraw
 
-[![version](https://img.shields.io/badge/version-1.2.0-blue)](packages/dsh-queue-withdraw)
-[![checks](https://img.shields.io/badge/checks-19-brightgreen)](packages/dsh-queue-withdraw/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.2.0-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
+[![checks](https://img.shields.io/badge/checks-19-brightgreen)](https://github.com/tzhaos/dsh-queue-withdraw/blob/main/scripts/check.mjs)
 
 **Withdraws queued messages back into the composer.**
 
@@ -355,7 +377,7 @@ hours can make a file unrestorable. Cache matching uses `name + size`.
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-queue-withdraw")
 ```
 
-[Docs](packages/dsh-queue-withdraw/README.en.md) · [中文](packages/dsh-queue-withdraw/README.md)
+[Docs](https://github.com/tzhaos/dsh-queue-withdraw/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-queue-withdraw#readme)
 
 ---
 
@@ -376,7 +398,7 @@ Turns middle-click into a tab-close gesture.
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-middle-click")
 ```
 
-[Docs](packages/dsh-tab-middle-click/README.en.md) · [中文](packages/dsh-tab-middle-click/README.md)
+[Docs](https://github.com/tzhaos/dsh-tab-middle-click/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-tab-middle-click#readme)
 
 ---
 
@@ -393,8 +415,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-midd
 └── CHANGELOG.md
 ```
 
-Each package contains `package.json`, `cordis.patch.yml`, a Host `index.js`, browser `client.js`,
-locale files, READMEs, CHANGELOG and zero-dependency tests.
+Directories under `packages/` are Git submodules pointing at independent repositories. The main
+repository stores only the submodule pins, install scripts and shared documentation. Each package
+contains `package.json`, `cordis.patch.yml`, a Host `index.js`, browser `client.js`, locale files,
+READMEs, CHANGELOG and zero-dependency tests.
 
 Packages are separate so they can be installed, rolled back and debugged independently. The
 monorepo only unifies Git, CI and install scripts.

@@ -1,0 +1,28 @@
+[submodule "packages/dsh-sidebar-sections"]
+	path = packages/dsh-sidebar-sections
+	url = https://github.com/tzhaos/dsh-sidebar-sections.git
+	branch = main
+[submodule "packages/dsh-file-link-actions"]
+	path = packages/dsh-file-link-actions
+	url = https://github.com/tzhaos/dsh-file-link-actions.git
+	branch = main
+[submodule "packages/dsh-composer-history"]
+	path = packages/dsh-composer-history
+	url = https://github.com/tzhaos/dsh-composer-history.git
+	branch = main
+[submodule "packages/dsh-hover-polish"]
+	path = packages/dsh-hover-polish
+	url = https://github.com/tzhaos/dsh-hover-polish.git
+	branch = main
+[submodule "packages/dsh-continue"]
+	path = packages/dsh-continue
+	url = https://github.com/tzhaos/dsh-continue.git
+	branch = main
+[submodule "packages/dsh-queue-withdraw"]
+	path = packages/dsh-queue-withdraw
+	url = https://github.com/tzhaos/dsh-queue-withdraw.git
+	branch = main
+[submodule "packages/dsh-tab-middle-click"]
+	path = packages/dsh-tab-middle-click
+	url = https://github.com/tzhaos/dsh-tab-middle-click.git
+	branch = main

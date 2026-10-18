@@ -28,15 +28,36 @@ monorepo。七个 package 可以一起安装，也可以单独安装、单独启
 
 | 插件 | 一句话 | 版本 | 检查 |
 |---|---|---|---|
-| [`dsh-sidebar-sections`](packages/dsh-sidebar-sections) | 置顶 / 项目 / 最近 / 归档四分区侧边栏 | 2.3.0 | 67 |
-| [`dsh-file-link-actions`](packages/dsh-file-link-actions) | 文件链接右键：默认应用打开、定位文件夹、复制路径 | 1.0.0 | 20 |
-| [`dsh-composer-history`](packages/dsh-composer-history) | 可搜索、可用 `↑` 取回的输入历史 | 1.2.0 | 29 |
-| [`dsh-hover-polish`](packages/dsh-hover-polish) | 统一按钮/标签 hover 与 Codex 风格 Tooltip | 1.0.11 | 34 |
-| [`dsh-continue`](packages/dsh-continue) | 停止/报错/截断后把发送按钮变成播放键 | 1.1.1 | 19 |
-| [`dsh-queue-withdraw`](packages/dsh-queue-withdraw) | 把排队消息撤回输入栏 | 1.2.0 | 19 |
-| [`dsh-tab-middle-click`](packages/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
+| [`dsh-sidebar-sections`](https://github.com/tzhaos/dsh-sidebar-sections) | 置顶 / 项目 / 最近 / 归档四分区侧边栏 | 2.3.0 | 67 |
+| [`dsh-file-link-actions`](https://github.com/tzhaos/dsh-file-link-actions) | 文件链接右键：默认应用打开、定位文件夹、复制路径 | 1.0.0 | 20 |
+| [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | 可搜索、可用 `↑` 取回的输入历史 | 1.2.0 | 29 |
+| [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | 统一按钮/标签 hover 与 Codex 风格 Tooltip | 1.0.11 | 34 |
+| [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | 停止/报错/截断后把发送按钮变成播放键 | 1.1.1 | 19 |
+| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 把排队消息撤回输入栏 | 1.2.0 | 19 |
+| [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
 
 全部 package 合计 **201 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
+
+## 给 Agent 的安装指令
+
+把本仓库地址发给 Agent，并附上下面的任务即可一次拉取全部插件：
+
+```text
+请克隆 https://github.com/tzhaos/dsh-plugins 并递归初始化 submodules：
+
+git clone --recurse-submodules https://github.com/tzhaos/dsh-plugins.git
+cd dsh-plugins
+node scripts/check-all.mjs
+node scripts/install-all.mjs
+
+完成后完全退出 DeepSeek Harness，再重新启动。
+```
+
+已经 clone 但 submodule 为空时：
+
+```powershell
+git submodule update --init --recursive
+```
 
 ## 快速开始
 
@@ -45,7 +66,7 @@ monorepo。七个 package 可以一起安装，也可以单独安装、单独启
 从 GitHub 克隆：
 
 ```powershell
-git clone https://github.com/tzhaos/dsh-plugins.git
+git clone --recurse-submodules https://github.com/tzhaos/dsh-plugins.git
 cd dsh-plugins
 node scripts/install-all.mjs --dry-run   # 先看会改什么
 node scripts/install-all.mjs             # 写入 profile 并链接七个 package
@@ -79,7 +100,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 `dsh plugin` 是 DSH 对 pnpm 的转发，所以它**可以**安装单个本地 package：
 
 ```powershell
-git clone https://github.com/tzhaos/dsh-plugins.git
+git clone --recurse-submodules https://github.com/tzhaos/dsh-plugins.git
 dsh plugin --profile desktop add "D:\dsh-plugins\dsh-plugins\packages\dsh-hover-polish"
 ```
 
@@ -112,7 +133,7 @@ node scripts/update-all.mjs
 # 完全退出 DSH，再重新启动
 ```
 
-脚本会先检查工作区、执行 `git pull --ff-only`，再运行 `install-all.mjs`。可选参数：
+脚本会先检查工作区、执行 `git pull --ff-only`，同步并初始化 submodules，再运行 `install-all.mjs`。可选参数：
 
 ```powershell
 node scripts/update-all.mjs --dry-run   # 只打印计划
@@ -124,6 +145,7 @@ node scripts/update-all.mjs --no-pull   # 已手动更新源码，只重新链�
 ```powershell
 git status --short          # 确认没有未提交改动
 git pull --ff-only
+git submodule update --init --recursive
 node scripts/install-all.mjs
 ```
 
@@ -188,12 +210,12 @@ DSH 仍是 pre-stable；客户端 API、slot 和 DOM 契约变化时，插件需
 
 ### dsh-sidebar-sections
 
-[![version](https://img.shields.io/badge/version-2.3.0-blue)](packages/dsh-sidebar-sections)
-[![checks](https://img.shields.io/badge/checks-67-brightgreen)](packages/dsh-sidebar-sections/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-2.3.0-blue)](https://github.com/tzhaos/dsh-sidebar-sections)
+[![checks](https://img.shields.io/badge/checks-67-brightgreen)](https://github.com/tzhaos/dsh-sidebar-sections/blob/main/scripts/check.mjs)
 
 把侧边栏变成 **置顶 / 项目 / 最近 / 归档** 四个正式分区。
 
-![dsh-sidebar-sections 2.3.0：四分区侧边栏、分区菜单与项目菜单](packages/dsh-sidebar-sections/docs/screenshot.png)
+![dsh-sidebar-sections 2.3.0：四分区侧边栏、分区菜单与项目菜单](https://raw.githubusercontent.com/tzhaos/dsh-sidebar-sections/main/docs/screenshot.png)
 
 *图片说明：左侧是「置顶 / 项目 / 最近 / 归档」四分区侧边栏；中间是分区菜单，可选择按项目分组、单一列表、手动排序或最近更新；右侧是项目菜单，可打开文件管理器、重命名或删除工作区。截图对应当前 2.3.0 界面。*
 
@@ -215,14 +237,14 @@ DSH 仍是 pre-stable；客户端 API、slot 和 DOM 契约变化时，插件需
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-sidebar-sections")
 ```
 
-[详细文档](packages/dsh-sidebar-sections/README.md) · [English](packages/dsh-sidebar-sections/README.en.md)
+[详细文档](https://github.com/tzhaos/dsh-sidebar-sections#readme) · [English](https://github.com/tzhaos/dsh-sidebar-sections/blob/main/README.en.md)
 
 ---
 
 ### dsh-file-link-actions
 
-[![version](https://img.shields.io/badge/version-1.0.0-blue)](packages/dsh-file-link-actions)
-[![checks](https://img.shields.io/badge/checks-20-brightgreen)](packages/dsh-file-link-actions/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/tzhaos/dsh-file-link-actions)
+[![checks](https://img.shields.io/badge/checks-20-brightgreen)](https://github.com/tzhaos/dsh-file-link-actions/blob/main/scripts/check.mjs)
 
 给对话里的本地文件链接补一个 **右键菜单**。
 
@@ -240,14 +262,14 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-sidebar-
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-file-link-actions")
 ```
 
-[详细文档](packages/dsh-file-link-actions/README.md) · [English](packages/dsh-file-link-actions/README.en.md)
+[详细文档](https://github.com/tzhaos/dsh-file-link-actions#readme) · [English](https://github.com/tzhaos/dsh-file-link-actions/blob/main/README.en.md)
 
 ---
 
 ### dsh-composer-history
 
-[![version](https://img.shields.io/badge/version-1.2.0-blue)](packages/dsh-composer-history)
-[![checks](https://img.shields.io/badge/checks-29-brightgreen)](packages/dsh-composer-history/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.2.0-blue)](https://github.com/tzhaos/dsh-composer-history)
+[![checks](https://img.shields.io/badge/checks-29-brightgreen)](https://github.com/tzhaos/dsh-composer-history/blob/main/scripts/check.mjs)
 
 给输入框补上 **可搜索、可快速取回的输入历史**。
 
@@ -265,14 +287,14 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-file-lin
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-composer-history")
 ```
 
-[详细文档](packages/dsh-composer-history/README.md) · [English](packages/dsh-composer-history/README.en.md)
+[详细文档](https://github.com/tzhaos/dsh-composer-history#readme) · [English](https://github.com/tzhaos/dsh-composer-history/blob/main/README.en.md)
 
 ---
 
 ### dsh-hover-polish
 
-[![version](https://img.shields.io/badge/version-1.0.11-blue)](packages/dsh-hover-polish)
-[![checks](https://img.shields.io/badge/checks-34-brightgreen)](packages/dsh-hover-polish/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.0.11-blue)](https://github.com/tzhaos/dsh-hover-polish)
+[![checks](https://img.shields.io/badge/checks-34-brightgreen)](https://github.com/tzhaos/dsh-hover-polish/blob/main/scripts/check.mjs)
 
 统一按钮和标签页的 hover 反馈，并给图标按钮提供 Codex 风格 Tooltip。
 
@@ -288,14 +310,14 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-composer
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-[详细文档](packages/dsh-hover-polish/README.md) · [English](packages/dsh-hover-polish/README.en.md)
+[详细文档](https://github.com/tzhaos/dsh-hover-polish#readme) · [English](https://github.com/tzhaos/dsh-hover-polish/blob/main/README.en.md)
 
 ---
 
 ### dsh-continue
 
-[![version](https://img.shields.io/badge/version-1.1.1-blue)](packages/dsh-continue)
-[![checks](https://img.shields.io/badge/checks-19-brightgreen)](packages/dsh-continue/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.1.1-blue)](https://github.com/tzhaos/dsh-continue)
+[![checks](https://img.shields.io/badge/checks-19-brightgreen)](https://github.com/tzhaos/dsh-continue/blob/main/scripts/check.mjs)
 
 任务 **停止、报错或被截断** 后，输入框为空时把发送按钮变成播放键。
 
@@ -311,14 +333,14 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue")
 ```
 
-[详细文档](packages/dsh-continue/README.md) · [English](packages/dsh-continue/README.en.md)
+[详细文档](https://github.com/tzhaos/dsh-continue#readme) · [English](https://github.com/tzhaos/dsh-continue/blob/main/README.en.md)
 
 ---
 
 ### dsh-queue-withdraw
 
-[![version](https://img.shields.io/badge/version-1.2.0-blue)](packages/dsh-queue-withdraw)
-[![checks](https://img.shields.io/badge/checks-19-brightgreen)](packages/dsh-queue-withdraw/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.2.0-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
+[![checks](https://img.shields.io/badge/checks-19-brightgreen)](https://github.com/tzhaos/dsh-queue-withdraw/blob/main/scripts/check.mjs)
 
 把排队中的消息 **撤回输入栏**。
 
@@ -334,7 +356,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-queue-withdraw")
 ```
 
-[详细文档](packages/dsh-queue-withdraw/README.md) · [English](packages/dsh-queue-withdraw/README.en.md)
+[详细文档](https://github.com/tzhaos/dsh-queue-withdraw#readme) · [English](https://github.com/tzhaos/dsh-queue-withdraw/blob/main/README.en.md)
 
 ---
 
@@ -355,7 +377,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-queue-wi
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-middle-click")
 ```
 
-[详细文档](packages/dsh-tab-middle-click/README.md) · [English](packages/dsh-tab-middle-click/README.en.md)
+[详细文档](https://github.com/tzhaos/dsh-tab-middle-click#readme) · [English](https://github.com/tzhaos/dsh-tab-middle-click/blob/main/README.en.md)
 
 ---
 
@@ -372,8 +394,9 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-midd
 └── CHANGELOG.md
 ```
 
-每个 package 都有 `package.json`、`cordis.patch.yml`、Host `index.js`、浏览器 `client.js`、
-locale、README、CHANGELOG 和零依赖测试。
+`packages/` 下的目录是 Git submodules，分别指向各自的独立仓库；主仓库只保存 submodule 指针、
+安装脚本和总文档。每个 package 都有 `package.json`、`cordis.patch.yml`、Host `index.js`、
+浏览器 `client.js`、locale、README、CHANGELOG 和零依赖测试。
 
 功能分开打包，是为了单独安装、单独回滚、单独定位问题；monorepo 只统一 Git、CI 和安装脚本。
 

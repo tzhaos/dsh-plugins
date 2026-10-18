@@ -29,3 +29,21 @@ changelog were preserved, but the original commit histories are not part of this
 
 The original standalone directories and the `tzhaos/dsh-sidebar-sections` remote are **not** deleted
 by this migration. Treat them as archived unless the migration is explicitly reverted.
+
+
+## Split back into independent repositories
+
+The plugin implementations were later split back into independent GitHub repositories. The main
+repository now keeps them as Git submodules under `packages/` and provides the shared installer,
+checks and documentation:
+
+- `tzhaos/dsh-sidebar-sections`
+- `tzhaos/dsh-file-link-actions`
+- `tzhaos/dsh-composer-history`
+- `tzhaos/dsh-hover-polish`
+- `tzhaos/dsh-continue`
+- `tzhaos/dsh-queue-withdraw`
+- `tzhaos/dsh-tab-middle-click`
+
+Clone with `--recurse-submodules` (or run `git submodule update --init --recursive`) before running
+`node scripts/install-all.mjs`.

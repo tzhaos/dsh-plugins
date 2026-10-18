@@ -51,6 +51,11 @@ const packageNames = readdirSync(PACKAGES_DIR)
   .filter((name) => existsSync(join(PACKAGES_DIR, name, 'package.json')))
   .sort()
 
+if (packageNames.length === 0) {
+  console.error('no packages found; run: git submodule update --init --recursive')
+  process.exit(1)
+}
+
 const nodeModules = join(profile, 'node_modules')
 mkdirSync(nodeModules, { recursive: true })
 
