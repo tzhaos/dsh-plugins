@@ -38,3 +38,7 @@
 	path = packages/dsh-sidebar-file-drop
 	url = https://github.com/tzhaos/dsh-sidebar-file-drop.git
 	branch = main
+[submodule "packages/dsh-nav-back-forward"]
+	path = packages/dsh-nav-back-forward
+	url = https://github.com/tzhaos/dsh-nav-back-forward.git
+	branch = main

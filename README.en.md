@@ -2,7 +2,7 @@
 
 # DSH Plugins
 
-**Ten independent DeepSeek Harness Web client plugins.**
+**Eleven independent DeepSeek Harness Web client plugins.**
 
 Sidebar sections · File-link actions · Composer history · Hover · One-click continue · Queue withdraw · Tab middle-click · Selection fork
 
@@ -22,7 +22,7 @@ Sidebar sections · File-link actions · Composer history · Hover · One-click 
 ## What this is
 
 A monorepo of Web client plugins for
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH). The ten packages can be
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH). The eleven packages can be
 installed together or independently, enabled and disabled separately, and each is still a complete
 DSH bundle.
 
@@ -40,6 +40,7 @@ sessions, or reimplement the agent.
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | Turn long pasted text into a `.txt` attachment, expandable back into the composer | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | Drag a sidebar file into the composer as a reference and bridge Desktop file paths | 1.1.0 | 15 |
+| [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Back/forward session controls in the top-left | 1.0.0 | 11 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.1.0 | 11 |
 
 All packages: **213 zero-dependency checks**; no build step, no runtime npm dependencies.
@@ -89,7 +90,7 @@ From a Creator-preset session:
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-`target` must be absolute. All ten targets:
+`target` must be absolute. All eleven targets:
 
 ```text
 <monorepo>/packages/dsh-sidebar-sections
@@ -102,6 +103,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 <monorepo>/packages/dsh-quick-fork
 <monorepo>/packages/dsh-long-paste
 <monorepo>/packages/dsh-sidebar-file-drop
+<monorepo>/packages/dsh-nav-back-forward
 ```
 
 ### Install one package with the `dsh plugin` CLI
@@ -471,11 +473,32 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-sidebar-
 
 ---
 
+### dsh-nav-back-forward
+
+**Back / Forward** controls for Session navigation in the top-left.
+
+- Records the main view's Session switches
+- Back/Forward calls `uiWorkspace.openSession()`
+- Buttons disable when there is nowhere to go
+- `Alt+Left` / `Alt+Right` shortcuts
+- A new external navigation truncates the forward branch
+
+**Limitations:** Sessions only; right-sidebar tabs, file tabs and scroll positions are not tracked.
+History restarts from the current Session after a refresh.
+
+```text
+plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-nav-back-forward")
+```
+
+[Docs](https://github.com/tzhaos/dsh-nav-back-forward/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-nav-back-forward#readme)
+
+---
+
 ## Repository layout
 
 ```text
 .
-├── packages/          # ten complete DSH bundles
+├── packages/          # eleven complete DSH bundles
 ├── scripts/
 │   ├── check-all.mjs
 │   └── install-all.mjs
@@ -513,6 +536,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-tab-middle-click` | 13 |
 | `dsh-long-paste` | 15 |
 | `dsh-sidebar-file-drop` | 15 |
+| `dsh-nav-back-forward` | 11 |
 | `dsh-quick-fork` | 11 |
 
 ## Privacy and data
