@@ -33,7 +33,7 @@ monorepo。七个 package 可以一起安装，也可以单独安装、单独启
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | 可搜索、可用 `↑` 取回的输入历史 | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | 统一按钮/标签 hover 与 Codex 风格 Tooltip | 1.0.11 | 34 |
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | 停止/报错/截断后把发送按钮变成播放键 | 1.1.1 | 19 |
-| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 把排队消息撤回输入栏 | 1.2.0 | 19 |
+| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 把排队消息撤回输入栏，撤回按钮放在行首左侧 | 1.2.1 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
 
 全部 package 合计 **202 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
@@ -339,11 +339,12 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue
 
 ### dsh-queue-withdraw
 
-[![version](https://img.shields.io/badge/version-1.2.0-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
+[![version](https://img.shields.io/badge/version-1.2.1-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
 [![checks](https://img.shields.io/badge/checks-19-brightgreen)](https://github.com/tzhaos/dsh-queue-withdraw/blob/main/scripts/check.mjs)
 
 把排队中的消息 **撤回输入栏**。
 
+- 撤回按钮放在排队行行首左侧，远离编辑/删除/插话按钮
 - 文本追加到现有草稿，而不是覆盖
 - 图片附件可回填
 - 文件附件在选择文件时缓存到浏览器 IndexedDB，撤回时重新注册为草稿附件

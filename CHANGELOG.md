@@ -26,6 +26,8 @@ package's own `CHANGELOG.md`.
 - Documented how to update an installed plugin for path-link and Plugin Manager installs, including
   the required full DSH restart and preserved local data.
 - `dsh-sidebar-sections` 2.4.0 now offers safe delete from every conversation row, not only archived rows.
+- `dsh-queue-withdraw` 1.2.1 moved its action from the right action cluster to the queue row leading
+  edge, away from edit/delete/steer.
 - Added `dsh-tab-middle-click` 1.0.0: middle-click closes a sidebar/dock tab through its existing
   close control.
 - Clarified that `dsh plugin` only forwards to pnpm: it installs the package but does not register the

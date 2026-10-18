@@ -36,7 +36,7 @@ sessions, or reimplement the agent.
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | Searchable composer history with `↑` recall | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | Unified button/tab hover and Codex-style tooltips | 1.0.11 | 34 |
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | Play control in the send button after a stop/error/truncation | 1.1.1 | 19 |
-| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Withdraw queued messages back into the composer | 1.2.0 | 19 |
+| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Withdraw queued messages, with the action on the row leading edge | 1.2.1 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 
 All packages: **202 zero-dependency checks**; no build step, no runtime npm dependencies.
@@ -357,11 +357,12 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue
 
 ### dsh-queue-withdraw
 
-[![version](https://img.shields.io/badge/version-1.2.0-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
+[![version](https://img.shields.io/badge/version-1.2.1-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
 [![checks](https://img.shields.io/badge/checks-19-brightgreen)](https://github.com/tzhaos/dsh-queue-withdraw/blob/main/scripts/check.mjs)
 
 **Withdraws queued messages back into the composer.**
 
+- The withdraw action is on the row leading edge, away from edit/delete/steer
 - Text appends to the existing draft instead of overwriting it
 - Image attachments can be restored
 - File attachments are cached in browser IndexedDB when selected and re-registered as draft files on
