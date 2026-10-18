@@ -36,12 +36,12 @@ sessions, or reimplement the agent.
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | Searchable composer history with `↑` recall | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | Unified button/tab hover and Codex-style tooltips | 1.0.11 | 34 |
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | Play control in the send button after a stop/error/truncation | 1.1.1 | 19 |
-| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Edit-by-withdraw and drag reordering for queued messages | 1.4.0 | 21 |
+| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Edit-by-withdraw, drag reordering and draft attachment persistence | 1.5.0 | 22 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | Turn long pasted text into a `.txt` attachment, expandable back into the composer | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | Drag a sidebar file into the composer as a reference and bridge Desktop file paths | 1.1.0 | 15 |
-| [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Back/forward session controls in the top-left | 1.1.0 | 11 |
-| [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex-style left rail: conversations/plugins/automation/settings | 1.1.0 | 12 |
+| [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Back/forward session controls in the top-left | 1.1.1 | 11 |
+| [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex-style left rail: conversations/plugins/automation/settings | 1.2.0 | 12 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.1.0 | 11 |
 
 All packages: **213 zero-dependency checks**; no build step, no runtime npm dependencies.
@@ -558,7 +558,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-composer-history` | 29 |
 | `dsh-hover-polish` | 34 |
 | `dsh-continue` | 19 |
-| `dsh-queue-withdraw` | 21 |
+| `dsh-queue-withdraw` | 22 |
 | `dsh-tab-middle-click` | 13 |
 | `dsh-long-paste` | 15 |
 | `dsh-sidebar-file-drop` | 15 |
