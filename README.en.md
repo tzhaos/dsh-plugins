@@ -44,13 +44,17 @@ All packages: **188 zero-dependency checks**; no build step, no runtime npm depe
 
 ### Install everything
 
+Clone from GitHub:
+
 ```powershell
-cd D:\dsh-plugins\dsh-plugins
+git clone https://github.com/tzhaos/dsh-plugins.git
+cd dsh-plugins
 node scripts/install-all.mjs --dry-run
 node scripts/install-all.mjs
 ```
 
-After installing, **fully quit and relaunch DSH**.
+If you already have the repository at `D:\dsh-plugins\dsh-plugins`, start with
+`node scripts/install-all.mjs`. After installing, **fully quit and relaunch DSH**.
 
 ### Install one
 
@@ -79,17 +83,32 @@ node scripts/check-all.mjs
 
 ## Updating
 
-This repository is not yet published to Git or npm, so there is no one-click app-store update.
-Update according to how you installed the plugins.
+The repository is published at <https://github.com/tzhaos/dsh-plugins>; npm and the plugin marketplace
+are not published yet. Update according to how the plugins were installed.
 
 ### Option 1: monorepo path-link install
 
+One command pulls and re-links:
+
 ```powershell
 cd D:\dsh-plugins\dsh-plugins
-git status --short          # make sure there are no local changes to lose
-git pull --ff-only          # once a remote exists; otherwise replace the directory manually
-node scripts/install-all.mjs
+node scripts/update-all.mjs
 # fully quit DSH, then start it again
+```
+
+The script checks the working tree, runs `git pull --ff-only`, then runs `install-all.mjs`. Options:
+
+```powershell
+node scripts/update-all.mjs --dry-run   # print the plan only
+node scripts/update-all.mjs --no-pull   # sources already updated; only re-link
+```
+
+Manual equivalent:
+
+```powershell
+git status --short          # make sure there are no local changes to lose
+git pull --ff-only
+node scripts/install-all.mjs
 ```
 
 - packages are path-linked: after `client.js` or other source changes, **fully restart DSH**; a page
@@ -114,16 +133,19 @@ already present, so version upgrades normally need a remove first.
 If only files in the same linked directory changed, a DSH restart is enough; reinstall when the path,
 version or `cordis.patch.yml` changes.
 
-### After a Git / npm release
+### GitHub repository versus installing one plugin
 
-If the plugins later move to Git or npm installs, update with that installation method and fully
-restart DSH:
+The GitHub repository root is a monorepo, not a single DSH bundle, so a `plugin_manager` `target`
+cannot point at the repository root. To install one plugin, clone first and point at the absolute
+package path:
 
 ```text
-dsh plugin --profile desktop add <new version spec>
+plugin_manager(action="install_bundle", target="<clone directory>/packages/dsh-hover-polish")
 ```
 
-Do not rely on a page refresh to load a new client bundle; the browser half loads at DSH startup.
+To install everything, use `node scripts/install-all.mjs`. If npm packages are published later,
+reinstall with the matching spec. Do not rely on a page refresh to load a new client bundle; the
+browser half loads at DSH startup.
 
 ### What updates preserve
 

@@ -41,12 +41,16 @@ monorepo。六个 package 可以一起安装，也可以单独安装、单独启
 
 ### 全部安装
 
+从 GitHub 克隆：
+
 ```powershell
-cd D:\dsh-plugins\dsh-plugins
+git clone https://github.com/tzhaos/dsh-plugins.git
+cd dsh-plugins
 node scripts/install-all.mjs --dry-run   # 先看会改什么
 node scripts/install-all.mjs             # 写入 profile 并链接六个 package
 ```
 
+已经在本地 `D:\dsh-plugins\dsh-plugins` 的话，直接从 `node scripts/install-all.mjs` 开始。
 安装后**完全退出 DSH 再启动**。
 
 ### 只安装一个
@@ -76,16 +80,32 @@ node scripts/check-all.mjs
 
 ## 更新
 
-当前仓库还没有发布到 Git / npm，所以还没有“应用商店一键更新”。按安装方式更新：
+仓库已经发布在 <https://github.com/tzhaos/dsh-plugins>；npm / 插件市场尚未发布。
+更新按安装方式处理。
 
 ### 方式一：monorepo 的 path-link 安装
 
+一条命令完成拉取和重新链接：
+
 ```powershell
 cd D:\dsh-plugins\dsh-plugins
-git status --short          # 确认没有未提交改动
-git pull --ff-only          # 仓库配置 remote 后使用；现在可手动替换目录
-node scripts/install-all.mjs
+node scripts/update-all.mjs
 # 完全退出 DSH，再重新启动
+```
+
+脚本会先检查工作区、执行 `git pull --ff-only`，再运行 `install-all.mjs`。可选参数：
+
+```powershell
+node scripts/update-all.mjs --dry-run   # 只打印计划
+node scripts/update-all.mjs --no-pull   # 已手动更新源码，只重新链接
+```
+
+手动等价步骤：
+
+```powershell
+git status --short          # 确认没有未提交改动
+git pull --ff-only
+node scripts/install-all.mjs
 ```
 
 - package 是路径链接：`client.js` 等源码更新后，**必须完整重启 DSH**，不要只刷新页面
@@ -108,15 +128,17 @@ plugin_manager(action="install_bundle", target="<新版本目录的绝对路径>
 如果只是同一个目录下的源码更新，DSH 重启后会读取新文件；只有路径、版本或
 `cordis.patch.yml` 变化时才需要重新安装。
 
-### 以后发布到 Git / npm 后
+### GitHub 仓库和单独安装的关系
 
-如果插件改为从 Git 或 npm 安装，按其安装方式重新拉取/安装，再完整重启 DSH：
+GitHub 仓库根目录是 monorepo，不是单个 DSH bundle，所以不能把 `plugin_manager` 的 `target`
+直接指向仓库根。需要单独安装某个插件时，先 clone，再把 target 指向绝对路径：
 
 ```text
-dsh plugin --profile desktop add <新版本 spec>
+plugin_manager(action="install_bundle", target="<clone 目录>/packages/dsh-hover-polish")
 ```
 
-不要依赖页面热刷新来加载新的 client bundle；DSH 的浏览器半部只在启动时加载。
+如果要全部安装，直接用 `node scripts/install-all.mjs`。以后如果发布 npm 包，再按对应 spec
+重新安装；不要依赖页面热刷新来加载新的 client bundle，DSH 的浏览器半部只在启动时加载。
 
 ### 更新会保留什么
 

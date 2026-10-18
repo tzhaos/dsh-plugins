@@ -20,6 +20,9 @@ package's own `CHANGELOG.md`.
   screenshots captured from the running UI; drawn approximations are not used as documentation.
 - Documented how to update an installed plugin for path-link and Plugin Manager installs, including
   the required full DSH restart and preserved local data.
+- Corrected the update docs after confirming the GitHub remote (`tzhaos/dsh-plugins`) and added
+  `scripts/update-all.mjs` plus the `npm run update` alias. The README now also explains why the
+  monorepo root itself cannot be passed to `plugin_manager install_bundle`.
 
 ## [1.0.0] - 2026-10-18
 

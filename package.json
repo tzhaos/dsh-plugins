@@ -6,7 +6,12 @@
   "description": "A monorepo of small DeepSeek Harness client plugins: sidebar sections, file links, composer history, hover polish, continue and queue withdraw.",
   "scripts": {
     "check": "node scripts/check-all.mjs",
-    "install:all": "node scripts/install-all.mjs"
+    "install:all": "node scripts/install-all.mjs",
+    "update": "node scripts/update-all.mjs"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tzhaos/dsh-plugins.git"
+  }
 }
