@@ -100,7 +100,9 @@ DSH is pre-stable; client APIs, slots and DOM contracts may change between relea
 
 Turns the sidebar into four first-class sections: **Pinned / Projects / Recent / Archived**.
 
-![Sidebar sections](packages/dsh-sidebar-sections/docs/screenshot.png)
+![dsh-sidebar-sections 2.3.0: four sidebar sections, section menu and project menu](packages/dsh-sidebar-sections/docs/screenshot.png)
+
+*Image notes: left is the four-section Pinned / Projects / Recent / Archived sidebar; middle is the section menu for grouping and ordering; right is the project menu with reveal, rename and delete actions. The screenshot reflects the current 2.3.0 UI.*
 
 - Four independent sections; Archived can be hidden in settings
 - Projects and Recent can group by project or use one flat list; projects order independently

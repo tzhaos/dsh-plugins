@@ -97,7 +97,9 @@ DSH 仍是 pre-stable；客户端 API、slot 和 DOM 契约变化时，插件需
 
 把侧边栏变成 **置顶 / 项目 / 最近 / 归档** 四个正式分区。
 
-![侧边栏分区](packages/dsh-sidebar-sections/docs/screenshot.png)
+![dsh-sidebar-sections 2.3.0：四分区侧边栏、分区菜单与项目菜单](packages/dsh-sidebar-sections/docs/screenshot.png)
+
+*图片说明：左侧是「置顶 / 项目 / 最近 / 归档」四分区侧边栏；中间是分区菜单，可选择按项目分组、单一列表、手动排序或最近更新；右侧是项目菜单，可打开文件管理器、重命名或删除工作区。截图对应当前 2.3.0 界面。*
 
 - 四个分区独立显示，归档区可在设置里关闭
 - 项目/最近支持按项目分组或单一列表，项目可独立排序

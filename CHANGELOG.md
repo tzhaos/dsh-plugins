@@ -14,6 +14,8 @@ package's own `CHANGELOG.md`.
   commands, plus compatibility, verification, privacy and development sections.
 - Condensed the per-plugin sections to current behaviour; fixes from the development history are no
   longer presented as features (they remain in package changelogs).
+- Added visible captions to every README screenshot, describing the panels/actions and identifying
+  the current 2.3.0 sidebar UI.
 
 ## [1.0.0] - 2026-10-18
 

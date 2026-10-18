@@ -11,7 +11,9 @@
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-67-brightgreen)
 
-![侧边栏分区、分区菜单与项目菜单](docs/screenshot.png)
+![dsh-sidebar-sections 2.3.0：四分区侧边栏、分区菜单与项目菜单](docs/screenshot.png)
+
+*图片说明：左侧为四分区侧边栏（置顶 / 项目 / 最近 / 归档）；中间为分区菜单，可切换按项目分组/单一列表与手动排序/最近更新；右侧为项目菜单，可打开文件管理器、重命名或删除工作区。截图对应当前 2.3.0 版本。*
 
 ## 目录
 

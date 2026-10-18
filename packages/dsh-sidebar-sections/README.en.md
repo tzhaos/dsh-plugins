@@ -12,7 +12,9 @@ menus, drag ordering, context menus, safe delete, plugin settings and file-manag
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-67-brightgreen)
 
-![Sidebar sections, section menu and project menu](docs/screenshot.png)
+![dsh-sidebar-sections 2.3.0: four sidebar sections, section menu and project menu](docs/screenshot.png)
+
+*Image notes: left is the four-section Pinned / Projects / Recent / Archived sidebar; middle is the section menu for grouping and ordering; right is the project menu with reveal, rename and delete actions. The screenshot reflects the current 2.3.0 version.*
 
 ## Table of contents
 
