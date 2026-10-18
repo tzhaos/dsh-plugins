@@ -75,6 +75,23 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 <monorepo>/packages/dsh-queue-withdraw
 ```
 
+### Install one package with the `dsh plugin` CLI
+
+`dsh plugin` forwards to pnpm, so it **can** install one local package:
+
+```powershell
+git clone https://github.com/tzhaos/dsh-plugins.git
+dsh plugin --profile desktop add "D:\dsh-plugins\dsh-plugins\packages\dsh-hover-polish"
+```
+
+It only installs the pnpm dependency; it **does not add the package to
+`dsh.profile.bundles`**. Append `dsh-hover-polish` to `dsh.profile.bundles` in
+`~/.dsh/profiles/desktop/package.json`, then fully restart DSH. `install-all.mjs` is preferred
+because it updates both the dependencies and the bundle list.
+
+The GitHub repository root cannot be used as the CLI target: it is a monorepo, not a single DSH
+bundle; a `github:` URL pointing at the root does not produce a loadable Loader row.
+
 ### Verify
 
 ```sh
@@ -133,7 +150,11 @@ already present, so version upgrades normally need a remove first.
 If only files in the same linked directory changed, a DSH restart is enough; reinstall when the path,
 version or `cordis.patch.yml` changes.
 
-### GitHub repository versus installing one plugin
+### Why `dsh plugin add github:...` is not enough
+
+`dsh plugin` only forwards to pnpm: it installs the dependency into the profile but **does not
+register the bundle**. DSH loads only the packages listed in `dsh.profile.bundles`, so a CLI-only
+install still needs a manual bundle-list edit.
 
 The GitHub repository root is a monorepo, not a single DSH bundle, so a `plugin_manager` `target`
 cannot point at the repository root. To install one plugin, clone first and point at the absolute

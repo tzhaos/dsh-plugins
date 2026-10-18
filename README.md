@@ -72,6 +72,23 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 <monorepo>/packages/dsh-queue-withdraw
 ```
 
+### 用 `dsh plugin` CLI 单独安装
+
+`dsh plugin` 是 DSH 对 pnpm 的转发，所以它**可以**安装单个本地 package：
+
+```powershell
+git clone https://github.com/tzhaos/dsh-plugins.git
+dsh plugin --profile desktop add "D:\dsh-plugins\dsh-plugins\packages\dsh-hover-polish"
+```
+
+但它只完成 pnpm 依赖安装，**不会把包加入 `dsh.profile.bundles`**。还需要在
+`~/.dsh/profiles/desktop/package.json` 的 `dsh.profile.bundles` 里追加
+`dsh-hover-polish`，然后完全重启 DSH。推荐直接用 `install-all.mjs`，它会同时处理依赖和
+bundle 列表。
+
+不能直接用 CLI 安装 GitHub 仓库根：根目录是 monorepo，不是单个 DSH bundle；把 `github:` URL
+指向仓库根不会得到可加载的 Loader 行。
+
 ### 检查
 
 ```sh
@@ -128,9 +145,12 @@ plugin_manager(action="install_bundle", target="<新版本目录的绝对路径>
 如果只是同一个目录下的源码更新，DSH 重启后会读取新文件；只有路径、版本或
 `cordis.patch.yml` 变化时才需要重新安装。
 
-### GitHub 仓库和单独安装的关系
+### 为什么 `dsh plugin add github:...` 不够
 
-GitHub 仓库根目录是 monorepo，不是单个 DSH bundle，所以不能把 `plugin_manager` 的 `target`
+`dsh plugin` 只转发给 pnpm：它负责把依赖装进 profile，**不负责注册 bundle**。DSH 启动时只
+加载 `dsh.profile.bundles` 中列出的包，所以单独用 CLI 安装后还要手动补 bundle 列表。
+
+GitHub 仓库根目录是 monorepo，不是单个 DSH bundle，所以也不能把 `plugin_manager` 的 `target`
 直接指向仓库根。需要单独安装某个插件时，先 clone，再把 target 指向绝对路径：
 
 ```text
