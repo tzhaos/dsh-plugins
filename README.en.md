@@ -36,7 +36,7 @@ sessions, or reimplement the agent.
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | Searchable composer history with `↑` recall | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | Unified button/tab hover and Codex-style tooltips | 1.0.11 | 34 |
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | Play control in the send button after a stop/error/truncation | 1.1.1 | 19 |
-| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Withdraw queued messages and edit attachment messages | 1.3.0 | 20 |
+| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Edit-by-withdraw and drag reordering for queued messages | 1.4.0 | 21 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | Turn long pasted text into a `.txt` attachment, expandable back into the composer | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | Drag a sidebar file into the composer as a reference and bridge Desktop file paths | 1.1.0 | 15 |
@@ -370,9 +370,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue
 [![version](https://img.shields.io/badge/version-1.3.0-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
 [![checks](https://img.shields.io/badge/checks-20-brightgreen)](https://github.com/tzhaos/dsh-queue-withdraw/blob/main/scripts/check.mjs)
 
-**Withdraws queued messages back into the composer.**
+**Edit-by-withdraw and drag reordering for queued messages.**
 
-- The withdraw action is on the row leading edge, away from edit/delete/steer
+- The Host edit icon always withdraws the whole message (text + attachments) into the composer
+- A leading drag handle reorders pending messages; the Host applies `Inbox.splice()` atomically
 - Text appends to the existing draft instead of overwriting it
 - Image attachments can be restored
 - File attachments are cached in browser IndexedDB when selected and re-registered as draft files on
@@ -557,7 +558,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-composer-history` | 29 |
 | `dsh-hover-polish` | 34 |
 | `dsh-continue` | 19 |
-| `dsh-queue-withdraw` | 20 |
+| `dsh-queue-withdraw` | 21 |
 | `dsh-tab-middle-click` | 13 |
 | `dsh-long-paste` | 15 |
 | `dsh-sidebar-file-drop` | 15 |
