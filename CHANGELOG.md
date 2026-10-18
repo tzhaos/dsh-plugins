@@ -12,6 +12,8 @@ package's own `CHANGELOG.md`.
   of the six plugins.
 - Added a quick-start section for the monorepo installer and individual `plugin_manager` install
   commands, plus compatibility, verification, privacy and development sections.
+- Condensed the per-plugin sections to current behaviour; fixes from the development history are no
+  longer presented as features (they remain in package changelogs).
 
 ## [1.0.0] - 2026-10-18
 
