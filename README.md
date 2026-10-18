@@ -38,7 +38,7 @@ monorepo。十二个 package 可以一起安装，也可以单独安装、单独
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | 超长文本粘贴为 `.txt` 附件，可展开回输入框 | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | 从侧边栏文件列表拖文件到输入框，并桥接 Desktop 文件路径 | 1.1.0 | 15 |
 | [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | 左上角会话前进/后退按钮 | 1.1.1 | 11 |
-| [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex 风格左侧图标栏：会话/插件/自动化/设置 | 1.2.0 | 12 |
+| [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex 风格左侧图标栏 + 账号设置菜单 | 1.3.0 | 13 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.1.0 | 11 |
 
 全部 package 合计 **213 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
@@ -483,7 +483,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-nav-back
 - 插件/自动化任务复用 DSH 原本图标，hover 提示自动避让视窗边缘
 - 插件/自动化任务通过 `ctx.layout.selectPanel()` 切换
 - 面板未安装时图标禁用
-- 设置点击宿主现有设置按钮
+- 设置按钮点击后打开账号菜单：头像/账号、设置、意见反馈、退出登录
 
 **限制：** 自动化任务图标依赖 DSH 注册 `schedules` 主面板；设置按钮依赖 aria-label 文案。
 
@@ -536,7 +536,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-long-paste` | 15 |
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
-| `dsh-left-rail` | 12 |
+| `dsh-left-rail` | 13 |
 | `dsh-quick-fork` | 11 |
 
 ## 隐私与数据
