@@ -32,6 +32,8 @@ package's own `CHANGELOG.md`.
 - `dsh-sidebar-sections` 2.4.0 now offers safe delete from every conversation row, not only archived rows.
 - `dsh-queue-withdraw` 1.2.1 moved its action from the right action cluster to the queue row leading
   edge, away from edit/delete/steer.
+- Added `dsh-left-rail` 1.0.0: Codex-style left icon rail for conversations, automation, plugins and
+  settings.
 - Added `dsh-nav-back-forward` 1.0.0: top-left Back/Forward controls for Session navigation.
 - Added `dsh-sidebar-file-drop` 1.0.0: drag a path-bearing sidebar file row into the composer as a
   file reference; 1.1.0 bridges the Desktop preload file-path API into the composer host-path seam.

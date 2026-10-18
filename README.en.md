@@ -2,7 +2,7 @@
 
 # DSH Plugins
 
-**Eleven independent DeepSeek Harness Web client plugins.**
+**Twelve independent DeepSeek Harness Web client plugins.**
 
 Sidebar sections · File-link actions · Composer history · Hover · One-click continue · Queue withdraw · Tab middle-click · Selection fork
 
@@ -22,7 +22,7 @@ Sidebar sections · File-link actions · Composer history · Hover · One-click 
 ## What this is
 
 A monorepo of Web client plugins for
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH). The eleven packages can be
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH). The twelve packages can be
 installed together or independently, enabled and disabled separately, and each is still a complete
 DSH bundle.
 
@@ -41,6 +41,7 @@ sessions, or reimplement the agent.
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | Turn long pasted text into a `.txt` attachment, expandable back into the composer | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | Drag a sidebar file into the composer as a reference and bridge Desktop file paths | 1.1.0 | 15 |
 | [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Back/forward session controls in the top-left | 1.0.0 | 11 |
+| [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex-style left rail: conversations/automation/plugins/settings | 1.0.0 | 12 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.1.0 | 11 |
 
 All packages: **213 zero-dependency checks**; no build step, no runtime npm dependencies.
@@ -90,7 +91,7 @@ From a Creator-preset session:
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-`target` must be absolute. All eleven targets:
+`target` must be absolute. All twelve targets:
 
 ```text
 <monorepo>/packages/dsh-sidebar-sections
@@ -104,6 +105,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 <monorepo>/packages/dsh-long-paste
 <monorepo>/packages/dsh-sidebar-file-drop
 <monorepo>/packages/dsh-nav-back-forward
+<monorepo>/packages/dsh-left-rail
 ```
 
 ### Install one package with the `dsh plugin` CLI
@@ -494,11 +496,32 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-nav-back
 
 ---
 
+### dsh-left-rail
+
+A Codex-style icon rail left of the existing sidebar.
+
+- a fixed 46px rail at the far left; `#root` shifts right
+- icons: Conversations, Automation, Plugins, Settings
+- Plugins/Automation switch panels through `ctx.layout.selectPanel()`
+- unavailable panels are disabled
+- Settings clicks the host's existing settings control
+
+**Limitations:** Automation requires a registered `schedules` main panel; Settings depends on the
+host button's aria-label text.
+
+```text
+plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-left-rail")
+```
+
+[Docs](https://github.com/tzhaos/dsh-left-rail/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-left-rail#readme)
+
+---
+
 ## Repository layout
 
 ```text
 .
-├── packages/          # eleven complete DSH bundles
+├── packages/          # twelve complete DSH bundles
 ├── scripts/
 │   ├── check-all.mjs
 │   └── install-all.mjs
@@ -537,6 +560,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-long-paste` | 15 |
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
+| `dsh-left-rail` | 12 |
 | `dsh-quick-fork` | 11 |
 
 ## Privacy and data

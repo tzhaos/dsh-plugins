@@ -42,3 +42,7 @@
 	path = packages/dsh-nav-back-forward
 	url = https://github.com/tzhaos/dsh-nav-back-forward.git
 	branch = main
+[submodule "packages/dsh-left-rail"]
+	path = packages/dsh-left-rail
+	url = https://github.com/tzhaos/dsh-left-rail.git
+	branch = main

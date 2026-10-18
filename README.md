@@ -2,7 +2,7 @@
 
 # DSH Plugins
 
-**十一个独立的 DeepSeek Harness Web 客户端插件。**
+**十二个独立的 DeepSeek Harness Web 客户端插件。**
 
 侧边栏分区 · 文件链接右键 · 输入历史 · Hover · 一键继续 · 排队消息撤回 · 标签中键关闭 · 划选复创
 
@@ -22,7 +22,7 @@
 ## 这是什么
 
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）Web 客户端插件
-monorepo。十一个 package 可以一起安装，也可以单独安装、单独启停；每个仍然是完整 DSH bundle。
+monorepo。十二个 package 可以一起安装，也可以单独安装、单独启停；每个仍然是完整 DSH bundle。
 
 它们只补日常交互中缺失的动作，不替换宿主组件，不接管会话，也不重新实现 Agent。
 
@@ -38,6 +38,7 @@ monorepo。十一个 package 可以一起安装，也可以单独安装、单独
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | 超长文本粘贴为 `.txt` 附件，可展开回输入框 | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | 从侧边栏文件列表拖文件到输入框，并桥接 Desktop 文件路径 | 1.1.0 | 15 |
 | [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | 左上角会话前进/后退按钮 | 1.0.0 | 11 |
+| [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex 风格左侧图标栏：会话/自动化/插件/设置 | 1.0.0 | 12 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.1.0 | 11 |
 
 全部 package 合计 **213 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
@@ -73,7 +74,7 @@ git submodule update --init --recursive
 git clone --recurse-submodules https://github.com/tzhaos/dsh-plugins.git
 cd dsh-plugins
 node scripts/install-all.mjs --dry-run   # 先看会改什么
-node scripts/install-all.mjs             # 写入 profile 并链接十一个 package
+node scripts/install-all.mjs             # 写入 profile 并链接十二个 package
 ```
 
 已经在本地 `D:\dsh-plugins\dsh-plugins` 的话，直接从 `node scripts/install-all.mjs` 开始。
@@ -87,7 +88,7 @@ node scripts/install-all.mjs             # 写入 profile 并链接十一个 pac
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-`target` 必须是绝对路径。十一个 target：
+`target` 必须是绝对路径。十二个 target：
 
 ```text
 <monorepo>/packages/dsh-sidebar-sections
@@ -101,6 +102,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 <monorepo>/packages/dsh-long-paste
 <monorepo>/packages/dsh-sidebar-file-drop
 <monorepo>/packages/dsh-nav-back-forward
+<monorepo>/packages/dsh-left-rail
 ```
 
 ### 用 `dsh plugin` CLI 单独安装
@@ -470,11 +472,31 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-nav-back
 
 ---
 
+### dsh-left-rail
+
+在现有侧边栏左侧新增一条 Codex 风格图标栏。
+
+- 最左侧 46px 固定 rail，`#root` 同步右移
+- 图标：会话、自动化任务、插件、设置
+- 插件/自动化任务通过 `ctx.layout.selectPanel()` 切换
+- 面板未安装时图标禁用
+- 设置点击宿主现有设置按钮
+
+**限制：** 自动化任务图标依赖 DSH 注册 `schedules` 主面板；设置按钮依赖 aria-label 文案。
+
+```text
+plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-left-rail")
+```
+
+[详细文档](https://github.com/tzhaos/dsh-left-rail#readme) · [English](https://github.com/tzhaos/dsh-left-rail/blob/main/README.en.md)
+
+---
+
 ## 仓库结构
 
 ```text
 .
-├── packages/          # 十一个完整 DSH bundle
+├── packages/          # 十二个完整 DSH bundle
 ├── scripts/
 │   ├── check-all.mjs
 │   └── install-all.mjs
@@ -511,6 +533,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-long-paste` | 15 |
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
+| `dsh-left-rail` | 12 |
 | `dsh-quick-fork` | 11 |
 
 ## 隐私与数据
