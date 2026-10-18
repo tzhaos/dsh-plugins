@@ -11,6 +11,10 @@ unified, Codex-style hover feedback and tooltips to buttons across the interface
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-34-brightgreen)
 
+![Hover and tooltip mockup](docs/overview.en.png)
+
+*Image notes: toolbar icon hover, the model-selector tooltip and file-tab hover; drawn for the current 1.0.11 behaviour.*
+
 ## Why
 
 Hover coverage in DSH is uneven: some controls only have the browser's native `title` bubble, some

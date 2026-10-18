@@ -16,6 +16,9 @@ package's own `CHANGELOG.md`.
   longer presented as features (they remain in package changelogs).
 - Added visible captions to every README screenshot, describing the panels/actions and identifying
   the current 2.3.0 sidebar UI.
+- Added a current-version overview image and visible image notes to every plugin package README and
+  to the root README. The new images are UI mockups drawn from the current behaviour so no real
+  conversation data is captured.
 
 ## [1.0.0] - 2026-10-18
 

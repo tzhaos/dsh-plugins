@@ -130,6 +130,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-sidebar-
 
 给对话里的本地文件链接补一个 **右键菜单**。
 
+![文件链接右键菜单示意](packages/dsh-file-link-actions/docs/overview.png)
+
+*图片说明：右键文件链接，选择默认应用打开、在文件夹中显示或复制路径（1.0.0 界面示意）。*
+
 - 用默认应用打开
 - 在文件管理器中定位
 - 复制解析后的绝对路径
@@ -154,6 +158,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-file-lin
 [![checks](https://img.shields.io/badge/checks-29-brightgreen)](packages/dsh-composer-history/scripts/check.mjs)
 
 给输入框补上 **可搜索、可快速取回的输入历史**。
+
+![输入历史面板示意](packages/dsh-composer-history/docs/overview.png)
+
+*图片说明：输入框时钟入口与历史面板，可搜索并取回提示词（1.2.0 界面示意）。*
 
 - 面板列出当前会话真实发送过的用户提示词
 - 输入框为空时按 `↑` 取回上一条；继续 `↑` 往前翻，`↓` 反向回退并恢复草稿
@@ -180,6 +188,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-composer
 
 统一按钮和标签页的 hover 反馈，并给图标按钮提供 Codex 风格 Tooltip。
 
+![Hover 与 Tooltip 示意](packages/dsh-hover-polish/docs/overview.png)
+
+*图片说明：图标按钮、模型选择器 Tooltip 与文件标签页的 hover 效果（1.0.11 界面示意）。*
+
 - 透明图标按钮获得统一的 hover 背景和过渡
 - 图标按钮的浏览器原生 `title` 改由自定义 Tooltip 显示
 - 模型/推理强度、权限模式、添加入口等控件显示动作说明，而不是重复按钮文字
@@ -203,6 +215,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 
 任务 **停止、报错或被截断** 后，输入框为空时把发送按钮变成播放键。
 
+![播放键继续示意](packages/dsh-continue/docs/overview.png)
+
+*图片说明：非正常结束且输入框为空时，发送按钮变为播放键（1.1.1 界面示意）。*
+
 - 点击后通过当前 Session 的 `prompt()` 提交「继续」/「Continue」
 - 不填草稿、不加附件、不绕过队列
 - 输入文字或附件后立即恢复普通发送按钮
@@ -225,6 +241,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue
 [![checks](https://img.shields.io/badge/checks-19-brightgreen)](packages/dsh-queue-withdraw/scripts/check.mjs)
 
 把排队中的消息 **撤回输入栏**。
+
+![排队消息撤回示意](packages/dsh-queue-withdraw/docs/overview.png)
+
+*图片说明：排队行的撤回按钮把消息和附件送回输入栏（1.2.0 界面示意）。*
 
 - 文本追加到现有草稿，而不是覆盖
 - 图片附件可回填

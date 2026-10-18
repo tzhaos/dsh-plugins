@@ -11,6 +11,10 @@
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-19-brightgreen)
 
+![播放键继续示意](docs/overview.png)
+
+*图片说明：非正常结束后输入框为空时，发送按钮变为播放键；按当前 1.1.1 行为绘制。*
+
 ## 为什么
 
 任务被停止、异常中断或输出被截断后想恢复，通常还要在输入框里打一句“继续”。这个动作没有

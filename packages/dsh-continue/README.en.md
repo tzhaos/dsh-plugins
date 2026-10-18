@@ -12,6 +12,10 @@ interrupted or truncated. No more typing “continue” after an abnormal ending
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-19-brightgreen)
 
+![Play-to-continue mockup](docs/overview.en.png)
+
+*Image notes: after an abnormal ending, an empty composer turns the send button into a play control; drawn for the current 1.1.1 behaviour.*
+
 ## Why
 
 After a task is stopped, interrupted or truncated, continuing it usually means typing “continue”

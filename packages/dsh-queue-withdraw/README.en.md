@@ -11,6 +11,10 @@ A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web client
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-19-brightgreen)
 
+![Queue withdraw mockup](docs/overview.en.png)
+
+*Image notes: the withdraw action returns a queued message and its attachments to the composer; drawn for the current 1.2.0 behaviour.*
+
 ## Why
 
 DSH's queued-message row offers edit, delete and steer. To take a message back and adjust it, delete

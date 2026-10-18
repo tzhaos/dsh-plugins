@@ -136,6 +136,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-sidebar-
 
 Adds a **context menu** to local file links in conversations.
 
+![File-link context menu mockup](packages/dsh-file-link-actions/docs/overview.en.png)
+
+*Image notes: right-click a file link to open the default app, reveal the folder or copy the path (1.0.0 mockup).*
+
 - Open with the default application
 - Reveal in the file manager
 - Copy the resolved absolute path
@@ -161,6 +165,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-file-lin
 [![checks](https://img.shields.io/badge/checks-29-brightgreen)](packages/dsh-composer-history/scripts/check.mjs)
 
 Adds **searchable composer history** with quick recall.
+
+![Composer history panel mockup](packages/dsh-composer-history/docs/overview.en.png)
+
+*Image notes: the clock entry and history panel search and recall prompts (1.2.0 mockup).*
 
 - Panel lists real user prompts sent in the current conversation
 - `↑` in an empty composer recalls the previous prompt; keep pressing to go older
@@ -189,6 +197,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-composer
 
 Unifies button/tab hover feedback and gives icon buttons Codex-style tooltips.
 
+![Hover and tooltip mockup](packages/dsh-hover-polish/docs/overview.en.png)
+
+*Image notes: icon-button hover, the model-selector tooltip and file-tab hover (1.0.11 mockup).*
+
 - Transparent icon buttons get one hover surface and transition
 - Native icon-button `title` is replaced by a custom tooltip
 - Model/reasoning, permission and add controls explain their action instead of repeating a label
@@ -214,6 +226,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 After a task is **stopped, errors or is truncated**, an empty composer's send button becomes a play
 control.
 
+![Play-to-continue mockup](packages/dsh-continue/docs/overview.en.png)
+
+*Image notes: after an abnormal ending, an empty composer turns the send button into play (1.1.1 mockup).*
+
 - Clicking submits “继续” / “Continue” through the current Session's `prompt()`
 - No draft insertion, no attachments, no bypassing the queue
 - Typing or adding attachments restores the normal send button
@@ -238,6 +254,10 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue
 [![checks](https://img.shields.io/badge/checks-19-brightgreen)](packages/dsh-queue-withdraw/scripts/check.mjs)
 
 **Withdraws queued messages back into the composer.**
+
+![Queue withdraw mockup](packages/dsh-queue-withdraw/docs/overview.en.png)
+
+*Image notes: the queue row’s withdraw action returns the message and attachments to the composer (1.2.0 mockup).*
 
 - Text appends to the existing draft instead of overwriting it
 - Image attachments can be restored

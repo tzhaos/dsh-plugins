@@ -11,6 +11,10 @@
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-19-brightgreen)
 
+![排队消息撤回示意](docs/overview.png)
+
+*图片说明：排队行的撤回按钮把文本和附件送回输入栏；按当前 1.2.0 行为绘制。*
+
 ## 为什么
 
 DSH 的排队消息行提供编辑、删除和插话三个动作。如果只是想先拿回来改一改，删除会丢失内容，

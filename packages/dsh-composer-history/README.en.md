@@ -11,6 +11,10 @@ searchable prompt-history palette and quick recall to the conversation composer.
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Checks](https://img.shields.io/badge/checks-29-brightgreen)
 
+![Composer history panel mockup](docs/overview.en.png)
+
+*Image notes: the clock entry and history panel search and recall prompts from this conversation; drawn for the current 1.2.0 behaviour.*
+
 ## Why
 
 Long conversations make it hard to reuse an earlier prompt: you scroll back, copy the message, and
