@@ -72,7 +72,7 @@ function findOne(root, predicate) {
 
 await check('manifest declares a DSH bundle and web client half', () => {
   assert.equal(manifest.name, 'dsh-continue')
-  assert.equal(manifest.version, '1.1.0')
+  assert.equal(manifest.version, '1.1.1')
   assert.equal(manifest.license, 'MIT')
   assert.equal(manifest.main, 'index.js')
   assert.equal(manifest.exports['./client'], './client.js')
@@ -295,7 +295,7 @@ function scenario(options = {}) {
   const reactRuntime = createFakeReact()
   const primitives = createFakePrimitives(reactRuntime)
   const fakeDocument = createFakeDocument()
-  const entries = options.entries ?? [turnStart(1), turnEnd('completed', 2)]
+  const entries = options.entries ?? [turnStart(1), turnEnd('aborted', 2)]
   const beginCalls = []
   const promptCalls = []
   const promptResult = options.promptResult ?? { ok: true }
@@ -369,12 +369,18 @@ await check('factory registers one composer-right Continue action', () => {
   assert.equal(registration.options.locale, 'continueTask')
 })
 
-await check('completed turn shows the Continue button', () => {
-  const { harness, t } = scenario({ entries: [turnStart(1), turnEnd('completed', 2)] })
-  const button = continueButton(harness)
-  assert(button, 'button rendered')
-  assert(textOf(button).includes(t('button.label')), 'button label')
-  assert.equal(button.props['data-dsh-continue'], 'session-a')
+await check('normally completed and forked turns do not show Continue', () => {
+  for (const kind of ['completed', 'forked']) {
+    const { harness } = scenario({ entries: [turnStart(1), turnEnd(kind, 2)] })
+    assert.equal(continueButton(harness), undefined, 'no play control after ' + kind)
+  }
+})
+
+await check('blocked, error and max-tokens turns still offer Continue', () => {
+  for (const kind of ['blocked', 'error', 'max-tokens']) {
+    const { harness } = scenario({ entries: [turnStart(1), turnEnd(kind, 2)] })
+    assert(continueButton(harness), 'play control after ' + kind)
+  }
 })
 
 await check('aborted turn shows the Continue button', () => {

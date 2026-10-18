@@ -4,6 +4,19 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-10-18
+
+### Fixed
+
+- Continue no longer appears after a normal `completed` turn (or a `forked` ending). It is now
+  limited to `aborted`, `blocked`, `error`, `max-tokens`, `interrupted` and trailing `turn/start`
+  interruption states, so ordinary finished conversations are not treated as resumable.
+
+### Verified
+
+- `node scripts/check.mjs`: 19 checks green, including the completed/forked exclusions and the
+  blocked/error/max-tokens inclusions.
+
 ## [1.1.0] - 2026-10-18
 
 ### Changed

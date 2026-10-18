@@ -39,13 +39,17 @@ window.__ModuleLoader__.load({
       'button.error': 'Continue failed — try again',
     }
 
+    /** Terminal reasons where continuing the task is useful. */
+    const CONTINUE_REASONS = new Set(['aborted', 'blocked', 'error', 'max-tokens', 'interrupted'])
+
     /**
      * Read the last turn boundary from one Session event window.
      *
-     * A `turn/end` means the last turn reached a terminal reason (completed,
-     * aborted, error or blocked). A trailing `turn/start` without an end is a
-     * crash/stop boundary; the caller still checks `running` before offering
-     * Continue.
+     * A normal `completed` turn already ended the task; Continue would be
+     * noise there. Only an interruption/stop (`aborted`, `interrupted`), a
+     * blocked/error terminal state, or a max-token truncation offers it. A
+     * trailing `turn/start` without an end is a crash/stop boundary; the
+     * caller still checks `running` before offering Continue.
      * @param {object|undefined} binding - retained Session binding.
      * @returns {{eligible: boolean, reason: string}} terminal state.
      */
@@ -58,7 +62,8 @@ window.__ModuleLoader__.load({
           const event = record?.event ?? record
           if (event === null || event === undefined) continue
           if (event.type === 'turn/end') {
-            return { eligible: true, reason: String(event.data?.reason?.kind ?? 'ended') }
+            const kind = String(event.data?.reason?.kind ?? 'ended')
+            return { eligible: CONTINUE_REASONS.has(kind), reason: kind }
           }
           if (event.type === 'turn/start') {
             return { eligible: true, reason: 'interrupted' }

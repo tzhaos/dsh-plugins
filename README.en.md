@@ -19,10 +19,10 @@ release metadata.
 | [`dsh-file-link-actions`](packages/dsh-file-link-actions) | 1.0.0 | 20 | Right-click actions for conversation file links: open in default app, reveal containing folder, copy path. |
 | [`dsh-composer-history`](packages/dsh-composer-history) | 1.2.0 | 29 | Composer prompt history with search, direct `↑` recall, palette clear and a Settings tab to view/delete/clear records. |
 | [`dsh-hover-polish`](packages/dsh-hover-polish) | 1.0.11 | 34 | Unified button/tab hover, Codex-style tooltips, explanatory bubbles, full tab titles and shortcut dedupe. |
-| [`dsh-continue`](packages/dsh-continue) | 1.1.0 | 18 | Turns the empty-composer send button into a one-click play/continue control after a terminal turn. |
+| [`dsh-continue`](packages/dsh-continue) | 1.1.1 | 19 | Turns the empty-composer send button into a play control only after aborted/error/truncated turns, not normal completion. |
 | [`dsh-queue-withdraw`](packages/dsh-queue-withdraw) | 1.2.0 | 19 | Withdraw queued text, images and temporarily cached files back into the draft. |
 
-All suites total **187 checks**, with no runtime dependencies.
+All suites total **188 checks**, with no runtime dependencies.
 
 ## Install
 

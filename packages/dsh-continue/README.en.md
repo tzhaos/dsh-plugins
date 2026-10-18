@@ -3,25 +3,27 @@
 [简体中文](README.md) | English
 
 A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web client plugin that turns the
-composer send button into a **play control** when the input is empty and the last turn finished or
-was stopped. No more typing “continue”.
+composer send button into a **play control** when the input is empty and the last turn was stopped,
+interrupted or truncated. No more typing “continue” after an abnormal ending.
 
 ![DeepSeek Harness](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)
-![Version](https://img.shields.io/badge/version-1.1.0-blue)
+![Version](https://img.shields.io/badge/version-1.1.1-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
-![Checks](https://img.shields.io/badge/checks-18-brightgreen)
+![Checks](https://img.shields.io/badge/checks-19-brightgreen)
 
 ## Why
 
-After a task finishes or is interrupted, continuing it usually means typing “continue” into the
-composer. That keystroke carries no information and breaks the flow.
+After a task is stopped, interrupted or truncated, continuing it usually means typing “continue”
+into the composer. That keystroke carries no information and breaks the flow. Normally completed
+and forked turns never show the control.
 
 `dsh-continue` turns it into a button:
 
 - renders a play control exactly over the Host send button when the conversation is idle, the input
   is empty, and the last turn reached a terminal state
-- covers `completed`, user-stopped, error-ended and trailing `turn/start` interruption states
+- covers user-stopped, blocked, error-ended, max-token and trailing `turn/start` interruption states;
+  normal `completed` and `forked` turns stay hidden
 - typing or adding an attachment restores the normal send button immediately
 - submits a normal queued prompt through the current Session's `prompt()`
 - no draft insertion, no attachments, and no path other than the normal Session admission flow
@@ -33,7 +35,8 @@ The button appears only when all of these hold:
 - the Session is open and not blank
 - `running === false`
 - there are no pending local submissions
-- the latest turn boundary is `turn/end`, or a trailing `turn/start` with no end (abnormal stop)
+- the latest `turn/end` reason is `aborted`, `blocked`, `error`, `max-tokens` or `interrupted`, or a
+  trailing `turn/start` has no end (abnormal stop)
 - the Session is not a subagent
 
 It stays hidden while the task is running, while the Session is loading, and when the Session is

@@ -3,23 +3,24 @@
 简体中文 | [English](README.en.md)
 
 一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 客户端插件：对话任务
-正常结束或被停止后，输入框为空时**发送按钮会变成播放键**。点一下就会继续上一轮任务，不必再手动输入“继续”。
+任务被停止、异常中断或输出被截断后，输入框为空时**发送按钮会变成播放键**。点一下就会继续上一轮任务，不必再手动输入“继续”。
 
 ![DeepSeek Harness](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)
-![Version](https://img.shields.io/badge/version-1.1.0-blue)
+![Version](https://img.shields.io/badge/version-1.1.1-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
-![Checks](https://img.shields.io/badge/checks-18-brightgreen)
+![Checks](https://img.shields.io/badge/checks-19-brightgreen)
 
 ## 为什么
 
-任务完成后想“接着做”，或者在任务被停止后想恢复，通常还要在输入框里打一句“继续”。这个动作没有
-信息量，却打断了操作。
+任务被停止、异常中断或输出被截断后想恢复，通常还要在输入框里打一句“继续”。这个动作没有
+信息量，却打断了操作。正常完成的轮次不会显示这个按钮，避免滥用。
 
 `dsh-continue` 把这一步变成一个按钮：
 
-- 对话空闲、输入框为空、最后一轮已经到达终止状态时，**发送按钮本身变成播放图标**
-- 正常完成（`completed`）、用户停止、异常结束或尾部只有 `turn/start` 的中断状态都会出现
+- 对话空闲、输入框为空、最后一轮是**中止/异常/截断状态**时，**发送按钮本身变成播放图标**
+- 正常完成（`completed`）和 `forked` 不显示，避免普通对话也被 Continue 打扰
+- 显示的状态：用户停止（`aborted`）、`blocked`、`error`、`max-tokens`、`interrupted`，以及尾部只有 `turn/start` 的中断
 - 输入文字或添加附件后立即恢复普通发送按钮，不会遮挡正常发送
 - 点击后直接通过当前 Session 的 `prompt()` 提交一条普通的排队提示词
 - 不需要先填入草稿、不需要附件、也不触发发送按钮以外的流程
@@ -31,7 +32,7 @@
 - 当前会话已打开，且不是空白会话
 - `running === false`
 - 没有待提交/排队中的本地提交
-- 最后一轮是 `turn/end`，或最后一轮只有 `turn/start`（异常中断）
+- 最后一轮的 `turn/end` reason 是 `aborted` / `blocked` / `error` / `max-tokens` / `interrupted`，或最后一轮只有 `turn/start`（异常中断）
 - 输入框没有文字和附件（Host 的主发送按钮处于 disabled 状态）
 - 不是子智能体会话
 
