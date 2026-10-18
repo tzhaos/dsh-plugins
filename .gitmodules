@@ -26,3 +26,7 @@
 	path = packages/dsh-tab-middle-click
 	url = https://github.com/tzhaos/dsh-tab-middle-click.git
 	branch = main
+[submodule "packages/dsh-quick-fork"]
+	path = packages/dsh-quick-fork
+	url = https://github.com/tzhaos/dsh-quick-fork.git
+	branch = main

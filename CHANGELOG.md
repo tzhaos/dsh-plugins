@@ -5,6 +5,10 @@ package's own `CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Added
+
+- Added `dsh-quick-fork` 0.1.0: select text in a conversation to open a temporary side conversation in the native right sidebar.
+
 ### Changed
 
 - Split the plugin implementations back into independent GitHub repositories and linked them from

@@ -2,9 +2,9 @@
 
 # DSH Plugins
 
-**Seven independent DeepSeek Harness Web client plugins.**
+**Eight independent DeepSeek Harness Web client plugins.**
 
-Sidebar sections · File-link actions · Composer history · Hover · One-click continue · Queue withdraw · Tab middle-click
+Sidebar sections · File-link actions · Composer history · Hover · One-click continue · Queue withdraw · Tab middle-click · Selection fork
 
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)](https://github.com/deepseek-ai/deepseek-harness)
 [![Checks](https://img.shields.io/badge/checks-201-brightgreen)](scripts/check-all.mjs)
@@ -22,7 +22,7 @@ Sidebar sections · File-link actions · Composer history · Hover · One-click 
 ## What this is
 
 A monorepo of Web client plugins for
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH). The seven packages can be
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH). The eight packages can be
 installed together or independently, enabled and disabled separately, and each is still a complete
 DSH bundle.
 
@@ -38,8 +38,9 @@ sessions, or reimplement the agent.
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | Play control in the send button after a stop/error/truncation | 1.1.1 | 19 |
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Withdraw queued messages, with the action on the row leading edge | 1.2.1 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
+| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.1.0 | 11 |
 
-All packages: **202 zero-dependency checks**; no build step, no runtime npm dependencies.
+All packages: **213 zero-dependency checks**; no build step, no runtime npm dependencies.
 
 ## Agent install prompt
 
@@ -86,7 +87,7 @@ From a Creator-preset session:
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-`target` must be absolute. All seven targets:
+`target` must be absolute. All eight targets:
 
 ```text
 <monorepo>/packages/dsh-sidebar-sections
@@ -96,6 +97,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 <monorepo>/packages/dsh-continue
 <monorepo>/packages/dsh-queue-withdraw
 <monorepo>/packages/dsh-tab-middle-click
+<monorepo>/packages/dsh-quick-fork
 ```
 
 ### Install one package with the `dsh plugin` CLI
@@ -403,11 +405,31 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-midd
 
 ---
 
+### dsh-quick-fork
+
+Select text in a conversation, click **Fork**, and open a temporary side conversation in the right sidebar.
+
+- a **Fork** action appears above the selection
+- creates a child Session through `sessions.fork` and opens a native right-sidebar tab
+- the panel shows the quote, transcript and composer with send/stop
+- closing the tab or the app removes it from view
+- the Fork action is hidden inside the side panel to prevent recursion
+
+**Version:** 0.1.0 — a compact side chat, not a full replica of the main conversation.
+
+```text
+plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-quick-fork")
+```
+
+[Docs](https://github.com/tzhaos/dsh-quick-fork/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-quick-fork#readme)
+
+---
+
 ## Repository layout
 
 ```text
 .
-├── packages/          # seven complete DSH bundles
+├── packages/          # eight complete DSH bundles
 ├── scripts/
 │   ├── check-all.mjs
 │   └── install-all.mjs
@@ -431,7 +453,7 @@ node scripts/check-all.mjs
 ```
 
 ```text
-all packages passed: 7 packages, 202 checks
+all packages passed: 8 packages, 213 checks
 ```
 
 | Package | Checks |
@@ -443,6 +465,7 @@ all packages passed: 7 packages, 202 checks
 | `dsh-continue` | 19 |
 | `dsh-queue-withdraw` | 19 |
 | `dsh-tab-middle-click` | 13 |
+| `dsh-quick-fork` | 11 |
 
 ## Privacy and data
 

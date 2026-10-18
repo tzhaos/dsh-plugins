@@ -2,9 +2,9 @@
 
 # DSH Plugins
 
-**七个独立的 DeepSeek Harness Web 客户端插件。**
+**八个独立的 DeepSeek Harness Web 客户端插件。**
 
-侧边栏分区 · 文件链接右键 · 输入历史 · Hover · 一键继续 · 排队消息撤回 · 标签中键关闭
+侧边栏分区 · 文件链接右键 · 输入历史 · Hover · 一键继续 · 排队消息撤回 · 标签中键关闭 · 划选复创
 
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)](https://github.com/deepseek-ai/deepseek-harness)
 [![Checks](https://img.shields.io/badge/checks-201-brightgreen)](scripts/check-all.mjs)
@@ -22,7 +22,7 @@
 ## 这是什么
 
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）Web 客户端插件
-monorepo。七个 package 可以一起安装，也可以单独安装、单独启停；每个仍然是完整 DSH bundle。
+monorepo。八个 package 可以一起安装，也可以单独安装、单独启停；每个仍然是完整 DSH bundle。
 
 它们只补日常交互中缺失的动作，不替换宿主组件，不接管会话，也不重新实现 Agent。
 
@@ -35,8 +35,9 @@ monorepo。七个 package 可以一起安装，也可以单独安装、单独启
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | 停止/报错/截断后把发送按钮变成播放键 | 1.1.1 | 19 |
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 把排队消息撤回输入栏，撤回按钮放在行首左侧 | 1.2.1 | 19 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
+| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.1.0 | 11 |
 
-全部 package 合计 **202 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
+全部 package 合计 **213 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
 
 ## 给 Agent 的安装指令
 
@@ -83,7 +84,7 @@ node scripts/install-all.mjs             # 写入 profile 并链接七个 packag
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-`target` 必须是绝对路径。七个 target：
+`target` 必须是绝对路径。八个 target：
 
 ```text
 <monorepo>/packages/dsh-sidebar-sections
@@ -93,6 +94,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 <monorepo>/packages/dsh-continue
 <monorepo>/packages/dsh-queue-withdraw
 <monorepo>/packages/dsh-tab-middle-click
+<monorepo>/packages/dsh-quick-fork
 ```
 
 ### 用 `dsh plugin` CLI 单独安装
@@ -382,11 +384,31 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-midd
 
 ---
 
+### dsh-quick-fork
+
+在对话中划选文字，点「复创」，在右侧栏开一个临时侧边对话。
+
+- 选中文字上方浮出「复创」按钮
+- 通过 `sessions.fork` 创建子会话，打开原生右栏 tab
+- 面板显示引用、消息列表和输入框；支持发送与停止
+- 关闭标签或退出应用后从视图消失
+- 侧聊面板内不再显示「复创」，避免递归创建
+
+**版本：** 0.1.0，精简侧聊，不是主对话的完整复刻。
+
+```text
+plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-quick-fork")
+```
+
+[详细文档](https://github.com/tzhaos/dsh-quick-fork#readme) · [English](https://github.com/tzhaos/dsh-quick-fork/blob/main/README.en.md)
+
+---
+
 ## 仓库结构
 
 ```text
 .
-├── packages/          # 七个完整 DSH bundle
+├── packages/          # 八个完整 DSH bundle
 ├── scripts/
 │   ├── check-all.mjs
 │   └── install-all.mjs
@@ -408,7 +430,7 @@ node scripts/check-all.mjs
 ```
 
 ```text
-all packages passed: 7 packages, 202 checks
+all packages passed: 8 packages, 213 checks
 ```
 
 | Package | Checks |
@@ -420,6 +442,7 @@ all packages passed: 7 packages, 202 checks
 | `dsh-continue` | 19 |
 | `dsh-queue-withdraw` | 19 |
 | `dsh-tab-middle-click` | 13 |
+| `dsh-quick-fork` | 11 |
 
 ## 隐私与数据
 
