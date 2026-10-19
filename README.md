@@ -39,7 +39,7 @@ monorepo。十二个 package 可以一起安装，也可以单独安装、单独
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | 从侧边栏文件列表拖文件到输入框，并桥接 Desktop 文件路径 | 1.1.0 | 15 |
 | [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | 左上角会话前进/后退按钮 | 1.3.3 | 11 |
 | [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex 风格左侧图标栏 + 品牌菜单 | 1.9.2 | 27 |
-| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.1.0 | 11 |
+| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.2.0 | 12 |
 
 全部 package 合计 **213 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
 
@@ -400,11 +400,12 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-midd
 
 - 选中文字上方浮出「复创」按钮
 - 通过 `sessions.fork` 创建子会话，打开原生右栏 tab
-- 面板显示引用、消息列表和输入框；支持发送与停止
+- 面板显示引用、Markdown 消息列表和输入框；支持发送与停止
+- 第一次发送自动把选中文字作为上下文带入
 - 关闭标签或退出应用后从视图消失
 - 侧聊面板内不再显示「复创」，避免递归创建
 
-**版本：** 0.1.0，精简侧聊，不是主对话的完整复刻。
+**版本：** 0.2.0，精简侧聊，不是主对话的完整复刻。
 
 ```text
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-quick-fork")
@@ -538,7 +539,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
 | `dsh-left-rail` | 27 |
-| `dsh-quick-fork` | 11 |
+| `dsh-quick-fork` | 12 |
 
 ## 隐私与数据
 

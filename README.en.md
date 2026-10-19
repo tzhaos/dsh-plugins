@@ -42,7 +42,7 @@ sessions, or reimplement the agent.
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | Drag a sidebar file into the composer as a reference and bridge Desktop file paths | 1.1.0 | 15 |
 | [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Back/forward session controls in the top-left | 1.3.3 | 11 |
 | [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex-style left rail + brand menu | 1.9.2 | 27 |
-| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.1.0 | 11 |
+| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.2.0 | 12 |
 
 All packages: **213 zero-dependency checks**; no build step, no runtime npm dependencies.
 
@@ -422,11 +422,12 @@ Select text in a conversation, click **Fork**, and open a temporary side convers
 
 - a **Fork** action appears above the selection
 - creates a child Session through `sessions.fork` and opens a native right-sidebar tab
-- the panel shows the quote, transcript and composer with send/stop
+- the panel shows the quote, Markdown transcript and composer with send/stop
+- the first message automatically carries the selected passage as context
 - closing the tab or the app removes it from view
 - the Fork action is hidden inside the side panel to prevent recursion
 
-**Version:** 0.1.0 — a compact side chat, not a full replica of the main conversation.
+**Version:** 0.2.0 — a compact side chat, not a full replica of the main conversation.
 
 ```text
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-quick-fork")
@@ -564,7 +565,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
 | `dsh-left-rail` | 27 |
-| `dsh-quick-fork` | 11 |
+| `dsh-quick-fork` | 12 |
 
 ## Privacy and data
 
