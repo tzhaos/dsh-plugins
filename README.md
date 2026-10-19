@@ -54,6 +54,11 @@ git clone --recurse-submodules https://github.com/tzhaos/dsh-plugins.git
 cd dsh-plugins
 node scripts/check-all.mjs
 node scripts/install-all.mjs
+```
+
+安装脚本会同步 **新增和删除**：`packages/` 中已删除的插件会从 profile 的 dependencies、`node_modules` 链接和 bundle 栈中移除；外部插件（如 `dsh-oil-ui`）不会被误删。
+
+```
 
 完成后完全退出 DeepSeek Harness，再重新启动。
 ```

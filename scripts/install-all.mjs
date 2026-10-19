@@ -15,6 +15,7 @@ import {
   readdirSync,
   readFileSync,
   readlinkSync,
+  rmdirSync,
   statSync,
   symlinkSync,
   unlinkSync,
@@ -57,6 +58,63 @@ if (packageNames.length === 0) {
 }
 
 const nodeModules = join(profile, 'node_modules')
+const packageRoot = resolve(PACKAGES_DIR) + (process.platform === 'win32' ? '\\' : '/')
+/** @param {unknown} value @returns {boolean} whether a dependency is a monorepo link. */
+function isManagedDependency(value) {
+  if (typeof value !== 'string' || !value.startsWith('link:')) return false
+  return resolve(value.slice(5)).startsWith(packageRoot)
+}
+
+// Deletions must propagate too: drop managed dependencies, junctions and
+// bundle rows whose package no longer exists in packages/.
+const removed = new Set()
+const external = new Set()
+for (const [name, value] of Object.entries(manifest.dependencies)) {
+  if (isManagedDependency(value) && !packageNames.includes(name)) {
+    removed.add(name)
+    delete manifest.dependencies[name]
+  } else if (!isManagedDependency(value)) {
+    external.add(name)
+  }
+}
+if (manifest.dsh?.profile?.bundles !== undefined) {
+  manifest.dsh.profile.bundles = manifest.dsh.profile.bundles.filter((name) => {
+    if (packageNames.includes(name) || external.has(name)) return true
+    if (typeof name === 'string' && name.startsWith('dsh-')) {
+      removed.add(name)
+      return false
+    }
+    return true
+  })
+}
+for (const entry of readdirSync(nodeModules)) {
+  const link = join(nodeModules, entry)
+  try {
+    const stat = lstatSync(link)
+    if (!stat.isSymbolicLink()) continue
+    const target = resolve(readlinkSafe(link) ?? '')
+    if (!target.startsWith(packageRoot)) continue
+    if (existsSync(join(target, 'package.json'))) continue
+    removed.add(entry)
+    if (!packageNames.includes(entry)) {
+      if (dryRun) console.log(`would remove stale link ${entry}`)
+      else unlinkSync(link)
+    }
+  } catch {
+    // Ignore unreadable/stale entries; the manifest prune below still applies.
+  }
+}
+for (const name of removed) {
+  const link = join(nodeModules, name)
+  try {
+    if (existsSync(link) || isLink(link)) {
+      if (dryRun) console.log(`would remove ${name} -> ${link}`)
+      else unlinkSync(link)
+    }
+  } catch {
+    // A stale row is already gone; pruning the manifest is enough.
+  }
+}
 mkdirSync(nodeModules, { recursive: true })
 
 for (const name of packageNames) {
@@ -89,12 +147,14 @@ for (const name of packageNames) {
 }
 
 if (dryRun) {
+  if (removed.size > 0) console.log(`would prune ${String(removed.size)} package(s): ${[...removed].join(', ')}`)
   console.log('dry run complete')
   process.exit(0)
 }
 
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n', 'utf8')
 console.log(`linked ${String(packageNames.length)} package(s) into ${profile}`)
+if (removed.size > 0) console.log(`pruned ${String(removed.size)} package(s): ${[...removed].join(', ')}`)
 console.log(`bundles: ${packageNames.join(', ')}`)
 
 /** @param {string} path @returns {boolean} whether the path exists as a link. */
