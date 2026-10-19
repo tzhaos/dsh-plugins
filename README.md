@@ -33,7 +33,7 @@ monorepo。十二个 package 可以一起安装，也可以单独安装、单独
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | 可搜索、可用 `↑` 取回的输入历史 | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | 统一按钮/标签 hover 与 Codex 风格 Tooltip | 1.0.11 | 34 |
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | 停止/报错/截断后用发送按钮触发隐藏 Goal 继续 | 1.3.0 | 21 |
-| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 排队消息编辑即撤回、整行拖动排序、合并与草稿附件保留 | 1.6.2 | 26 |
+| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 排队消息编辑即撤回、整行拖动排序、合并与草稿附件保留 | 1.7.1 | 26 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | 超长文本粘贴为 `.txt` 附件，可展开回输入框 | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | 从侧边栏文件列表拖文件到输入框，并桥接 Desktop 文件路径 | 1.1.0 | 15 |
