@@ -30,6 +30,11 @@ const PACKAGES_DIR = join(ROOT, 'packages')
 
 const args = process.argv.slice(2)
 const dryRun = args.includes('--dry-run')
+const installAll = args.includes('--all')
+const excludeIndex = args.indexOf('--exclude')
+const requestedExclude = excludeIndex >= 0 && args[excludeIndex + 1] !== undefined
+  ? args[excludeIndex + 1].split(',').map((name) => name.trim()).filter(Boolean)
+  : []
 const profileIndex = args.indexOf('--profile')
 const profile = profileIndex >= 0 && args[profileIndex + 1] !== undefined
   ? resolve(args[profileIndex + 1])
@@ -57,6 +62,47 @@ if (packageNames.length === 0) {
   process.exit(1)
 }
 
+const STATE_PATH = join(profile, '.dsh-plugin-installer.json')
+const foreign = []
+const managedCurrent = []
+for (const [name, value] of Object.entries(manifest.dependencies)) {
+  if (typeof value === 'string' && value.startsWith('link:')
+    && resolve(value.slice(5)).startsWith(resolve(PACKAGES_DIR) + (process.platform === 'win32' ? '\\' : '/'))) {
+    managedCurrent.push(name)
+  } else foreign.push(name)
+}
+let previousManaged
+let previousDeleted = []
+try {
+  const state = JSON.parse(readFileSync(STATE_PATH, 'utf8'))
+  if (Array.isArray(state?.managed)) previousManaged = state.managed.filter((name) => typeof name === 'string')
+  if (Array.isArray(state?.deleted)) previousDeleted = state.deleted.filter((name) => typeof name === 'string')
+} catch {
+  previousManaged = undefined
+}
+const deleted = new Set(installAll ? [] : previousDeleted)
+let targetNames
+if (installAll || previousManaged === undefined) {
+  targetNames = [...packageNames]
+} else {
+  // A package the user removed from the profile stays removed on update.
+  for (const name of previousManaged) {
+    if (!managedCurrent.includes(name) && packageNames.includes(name)) deleted.add(name)
+  }
+  // Reinstalling one by hand clears its deletion tombstone.
+  for (const name of [...deleted]) {
+    if (managedCurrent.includes(name)) deleted.delete(name)
+  }
+  targetNames = packageNames.filter((name) => !deleted.has(name))
+}
+for (const name of requestedExclude) {
+  if (packageNames.includes(name)) {
+    deleted.add(name)
+    targetNames = targetNames.filter((entry) => entry !== name)
+  }
+}
+targetNames = [...new Set(targetNames)].sort()
+
 const nodeModules = join(profile, 'node_modules')
 const packageRoot = resolve(PACKAGES_DIR) + (process.platform === 'win32' ? '\\' : '/')
 /** @param {unknown} value @returns {boolean} whether a dependency is a monorepo link. */
@@ -70,7 +116,7 @@ function isManagedDependency(value) {
 const removed = new Set()
 const external = new Set()
 for (const [name, value] of Object.entries(manifest.dependencies)) {
-  if (isManagedDependency(value) && !packageNames.includes(name)) {
+  if (isManagedDependency(value) && (!packageNames.includes(name) || !targetNames.includes(name))) {
     removed.add(name)
     delete manifest.dependencies[name]
   } else if (!isManagedDependency(value)) {
@@ -79,7 +125,7 @@ for (const [name, value] of Object.entries(manifest.dependencies)) {
 }
 if (manifest.dsh?.profile?.bundles !== undefined) {
   manifest.dsh.profile.bundles = manifest.dsh.profile.bundles.filter((name) => {
-    if (packageNames.includes(name) || external.has(name)) return true
+    if (targetNames.includes(name) || external.has(name)) return true
     if (typeof name === 'string' && name.startsWith('dsh-')) {
       removed.add(name)
       return false
@@ -117,7 +163,7 @@ for (const name of removed) {
 }
 mkdirSync(nodeModules, { recursive: true })
 
-for (const name of packageNames) {
+for (const name of targetNames) {
   const target = join(PACKAGES_DIR, name)
   const link = join(nodeModules, name)
   if (existsSync(link) || isLink(link)) {
@@ -148,14 +194,17 @@ for (const name of packageNames) {
 
 if (dryRun) {
   if (removed.size > 0) console.log(`would prune ${String(removed.size)} package(s): ${[...removed].join(', ')}`)
+  if (deleted.size > 0) console.log(`would keep removed: ${[...deleted].join(', ')}`)
   console.log('dry run complete')
   process.exit(0)
 }
 
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n', 'utf8')
-console.log(`linked ${String(packageNames.length)} package(s) into ${profile}`)
+if (deleted.size > 0) console.log(`kept removed: ${[...deleted].join(', ')}`)
+writeFileSync(STATE_PATH, JSON.stringify({ managed: targetNames, deleted: [...deleted] }, null, 2) + '\n', 'utf8')
+console.log(`linked ${String(targetNames.length)} package(s) into ${profile}`)
 if (removed.size > 0) console.log(`pruned ${String(removed.size)} package(s): ${[...removed].join(', ')}`)
-console.log(`bundles: ${packageNames.join(', ')}`)
+console.log(`bundles: ${targetNames.join(', ')}`)
 
 /** @param {string} path @returns {boolean} whether the path exists as a link. */
 function isLink(path) {

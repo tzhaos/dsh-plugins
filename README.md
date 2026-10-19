@@ -56,7 +56,7 @@ node scripts/check-all.mjs
 node scripts/install-all.mjs
 ```
 
-安装脚本会同步 **新增和删除**：`packages/` 中已删除的插件会从 profile 的 dependencies、`node_modules` 链接和 bundle 栈中移除；外部插件（如 `dsh-oil-ui`）不会被误删。
+安装脚本默认记住用户删除过的插件（`.dsh-plugin-installer.json` 中的 tombstone），后续更新不会把它装回来；`--exclude <name>` 可显式删除，`--all` 可强制恢复全部。安装脚本会同步 **新增和删除**：`packages/` 中已删除的插件会从 profile 的 dependencies、`node_modules` 链接和 bundle 栈中移除；外部插件（如 `dsh-oil-ui`）不会被误删。
 
 ```
 
