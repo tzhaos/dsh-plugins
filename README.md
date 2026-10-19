@@ -405,7 +405,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-midd
 - 关闭标签或退出应用后从视图消失
 - 侧聊面板内不再显示「复创」，避免递归创建
 
-**版本：** 0.3.1，空白子会话的精简侧聊，不是主对话的完整复刻。
+**版本：** 0.4.0，空白子会话的精简侧聊，不是主对话的完整复刻。
 
 ```text
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-quick-fork")
@@ -539,7 +539,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
 | `dsh-left-rail` | 27 |
-| `dsh-quick-fork` | 13 |
+| `dsh-quick-fork` | 14 |
 
 ## 隐私与数据
 

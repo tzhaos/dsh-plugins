@@ -565,7 +565,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
 | `dsh-left-rail` | 27 |
-| `dsh-quick-fork` | 13 |
+| `dsh-quick-fork` | 14 |
 
 ## Privacy and data
 
