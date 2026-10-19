@@ -531,7 +531,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-file-link-actions` | 20 |
 | `dsh-composer-history` | 29 |
 | `dsh-hover-polish` | 34 |
-| `dsh-continue` | 21 |
+| `dsh-continue` | 22 |
 | `dsh-queue-withdraw` | 26 |
 | `dsh-tab-middle-click` | 13 |
 | `dsh-long-paste` | 15 |
