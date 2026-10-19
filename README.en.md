@@ -31,18 +31,18 @@ sessions, or reimplement the agent.
 
 | Plugin | One line | Version | Checks |
 |---|---|---|---|
-| [`dsh-sidebar-sections`](https://github.com/tzhaos/dsh-sidebar-sections) | Pinned / Projects / Recent / Archived sidebar with safe delete on every row | 2.4.0 | 68 |
+| [`dsh-sidebar-sections`](https://github.com/tzhaos/dsh-sidebar-sections) | Pinned / Projects / Recent / Archived sidebar with safe delete on every row | 2.4.2 | 68 |
 | [`dsh-file-link-actions`](https://github.com/tzhaos/dsh-file-link-actions) | File-link context menu: default app, reveal folder, copy path | 1.0.0 | 20 |
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | Searchable composer history with `↑` recall | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | Unified button/tab hover and Codex-style tooltips | 1.0.11 | 34 |
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | Continue through the send button with a hidden Goal round after a stop/error/truncation | 1.3.0 | 21 |
-| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Edit-by-withdraw, full-row drag reordering, merging and draft attachment persistence | 1.6.0 | 26 |
+| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Edit-by-withdraw, full-row drag reordering, merging and draft attachment persistence | 1.6.2 | 26 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | Turn long pasted text into a `.txt` attachment, expandable back into the composer | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | Drag a sidebar file into the composer as a reference and bridge Desktop file paths | 1.1.0 | 15 |
 | [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Back/forward session controls in the top-left | 1.3.3 | 11 |
 | [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex-style left rail + brand menu | 1.9.2 | 27 |
-| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.2.0 | 12 |
+| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.3.0 | 13 |
 
 All packages: **213 zero-dependency checks**; no build step, no runtime npm dependencies.
 
@@ -565,7 +565,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
 | `dsh-left-rail` | 27 |
-| `dsh-quick-fork` | 12 |
+| `dsh-quick-fork` | 13 |
 
 ## Privacy and data
 

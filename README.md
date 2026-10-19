@@ -28,18 +28,18 @@ monorepo。十二个 package 可以一起安装，也可以单独安装、单独
 
 | 插件 | 一句话 | 版本 | 检查 |
 |---|---|---|---|
-| [`dsh-sidebar-sections`](https://github.com/tzhaos/dsh-sidebar-sections) | 置顶 / 项目 / 最近 / 归档四分区侧边栏，所有会话行可安全删除 | 2.4.0 | 68 |
+| [`dsh-sidebar-sections`](https://github.com/tzhaos/dsh-sidebar-sections) | 置顶 / 项目 / 最近 / 归档四分区侧边栏，所有会话行可安全删除 | 2.4.2 | 68 |
 | [`dsh-file-link-actions`](https://github.com/tzhaos/dsh-file-link-actions) | 文件链接右键：默认应用打开、定位文件夹、复制路径 | 1.0.0 | 20 |
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | 可搜索、可用 `↑` 取回的输入历史 | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | 统一按钮/标签 hover 与 Codex 风格 Tooltip | 1.0.11 | 34 |
 | [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | 停止/报错/截断后用发送按钮触发隐藏 Goal 继续 | 1.3.0 | 21 |
-| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 排队消息编辑即撤回、整行拖动排序、合并与草稿附件保留 | 1.6.0 | 26 |
+| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 排队消息编辑即撤回、整行拖动排序、合并与草稿附件保留 | 1.6.2 | 26 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | 超长文本粘贴为 `.txt` 附件，可展开回输入框 | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | 从侧边栏文件列表拖文件到输入框，并桥接 Desktop 文件路径 | 1.1.0 | 15 |
 | [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | 左上角会话前进/后退按钮 | 1.3.3 | 11 |
 | [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex 风格左侧图标栏 + 品牌菜单 | 1.9.2 | 27 |
-| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.2.0 | 12 |
+| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.3.0 | 13 |
 
 全部 package 合计 **213 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
 
@@ -405,7 +405,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-tab-midd
 - 关闭标签或退出应用后从视图消失
 - 侧聊面板内不再显示「复创」，避免递归创建
 
-**版本：** 0.2.0，精简侧聊，不是主对话的完整复刻。
+**版本：** 0.3.0，空白子会话的精简侧聊，不是主对话的完整复刻。
 
 ```text
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-quick-fork")
@@ -539,7 +539,7 @@ all packages passed: 8 packages, 213 checks
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
 | `dsh-left-rail` | 27 |
-| `dsh-quick-fork` | 12 |
+| `dsh-quick-fork` | 13 |
 
 ## 隐私与数据
 
