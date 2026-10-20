@@ -2,12 +2,12 @@
 
 # DSH Plugins
 
-**十二个独立的 DeepSeek Harness Web 客户端插件。**
+**十一个独立的 DeepSeek Harness Web 客户端插件。**
 
-侧边栏分区 · 文件链接右键 · 输入历史 · Hover · 一键继续 · 排队消息撤回 · 标签中键关闭 · 划选复创
+侧边栏分区 · 文件链接右键 · 输入历史 · Hover · 排队消息撤回 · 标签中键关闭 · 划选复创
 
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)](https://github.com/deepseek-ai/deepseek-harness)
-[![Checks](https://img.shields.io/badge/checks-342-brightgreen)](scripts/check-all.mjs)
+[![Checks](https://img.shields.io/badge/checks-292-brightgreen)](scripts/check-all.mjs)
 [![Runtime deps](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)](package.json)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -22,7 +22,7 @@
 ## 这是什么
 
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）Web 客户端插件
-monorepo。十二个 package 可以一起安装，也可以单独安装、单独启停；每个仍然是完整 DSH bundle。
+monorepo。十一个 package 可以一起安装，也可以单独安装、单独启停；每个仍然是完整 DSH bundle。
 
 它们只补日常交互中缺失的动作，不替换宿主组件，不接管会话，也不重新实现 Agent。
 
@@ -32,16 +32,15 @@ monorepo。十二个 package 可以一起安装，也可以单独安装、单独
 | [`dsh-file-link-actions`](https://github.com/tzhaos/dsh-file-link-actions) | 文件链接右键：默认应用打开、定位文件夹、复制路径 | 1.0.0 | 20 |
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | 可搜索、可用 `↑` 取回的输入历史 | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | 统一按钮/标签 hover 与 Codex 风格 Tooltip | 1.0.11 | 34 |
-| [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | 停止/报错/截断后用发送按钮注入隐藏的「继续对话」轮次（不依赖 Goal） | 1.5.0 | 27 |
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 排队消息撤回/原生编辑、整行拖动排序、合并与锁定 | 1.11.5 | 40 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | 超长文本粘贴为 `.txt` 附件，可展开回输入框 | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | 从侧边栏文件列表拖文件到输入框，并桥接 Desktop 文件路径 | 1.1.0 | 15 |
 | [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Windows 标题栏右侧的会话前进/后退按钮 | 1.3.4 | 11 |
 | [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex 风格左侧图标栏 + 品牌菜单 | 1.9.2 | 27 |
-| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.3.0 | 13 |
+| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.3.0 | 20 |
 
-全部 package 合计 **342 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
+全部 package 合计 **292 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
 
 ## 给 Agent 的安装指令
 
@@ -79,7 +78,7 @@ git submodule update --init --recursive
 git clone --recurse-submodules https://github.com/tzhaos/dsh-plugins.git
 cd dsh-plugins
 node scripts/install-all.mjs --dry-run   # 先看会改什么
-node scripts/install-all.mjs             # 写入 profile 并链接十二个 package
+node scripts/install-all.mjs             # 写入 profile 并链接十一个 package
 ```
 
 已经在本地 `D:\dsh-plugins\dsh-plugins` 的话，直接从 `node scripts/install-all.mjs` 开始。
@@ -93,14 +92,13 @@ node scripts/install-all.mjs             # 写入 profile 并链接十二个 pac
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-`target` 必须是绝对路径。十二个 target：
+`target` 必须是绝对路径。十一个 target：
 
 ```text
 <monorepo>/packages/dsh-sidebar-sections
 <monorepo>/packages/dsh-file-link-actions
 <monorepo>/packages/dsh-composer-history
 <monorepo>/packages/dsh-hover-polish
-<monorepo>/packages/dsh-continue
 <monorepo>/packages/dsh-queue-withdraw
 <monorepo>/packages/dsh-tab-middle-click
 <monorepo>/packages/dsh-quick-fork
@@ -329,30 +327,6 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 
 ---
 
-### dsh-continue
-
-[![version](https://img.shields.io/badge/version-1.5.0-blue)](https://github.com/tzhaos/dsh-continue)
-[![checks](https://img.shields.io/badge/checks-27-brightgreen)](https://github.com/tzhaos/dsh-continue/blob/main/scripts/check.mjs)
-
-任务 **停止、报错或被截断** 后，输入框为空时把发送按钮变成实心播放键。
-
-- 点击后由插件自己的宿主路由注入一条隐藏的 user 消息（`source.kind = 'continue'`），不经过 Goal 服务
-- 聊天里不会出现普通用户气泡，而是一张可展开的 **「继续对话」** 卡片，图标为播放三角
-- 不填草稿、不加附件、不绕过队列
-- 输入文字或附件后立即恢复普通发送按钮
-
-**显示状态：** 仅在 `aborted`、`blocked`、`error`、`max-tokens`、`interrupted`，或尾部只有 `turn/start` 的异常中断时出现；正常完成和 `forked` 不显示。
-
-**限制：** 卡片标题的替换按注入时间匹配宿主内置触发卡片（±4 秒），DSH 若改变该卡片结构需要适配。
-
-```text
-plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue")
-```
-
-[详细文档](https://github.com/tzhaos/dsh-continue#readme) · [English](https://github.com/tzhaos/dsh-continue/blob/main/README.en.md)
-
----
-
 ### dsh-queue-withdraw
 
 [![version](https://img.shields.io/badge/version-1.11.5-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
@@ -506,7 +480,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-left-rai
 
 ```text
 .
-├── packages/          # 十二个完整 DSH bundle
+├── packages/          # 十一个完整 DSH bundle
 ├── scripts/
 │   ├── check-all.mjs
 │   └── install-all.mjs
@@ -528,7 +502,7 @@ node scripts/check-all.mjs
 ```
 
 ```text
-all packages passed: 8 packages, 213 checks
+all packages passed: 11 packages, 292 checks
 ```
 
 | Package | Checks |
@@ -537,14 +511,13 @@ all packages passed: 8 packages, 213 checks
 | `dsh-file-link-actions` | 20 |
 | `dsh-composer-history` | 29 |
 | `dsh-hover-polish` | 34 |
-| `dsh-continue` | 22 |
-| `dsh-queue-withdraw` | 26 |
+| `dsh-queue-withdraw` | 40 |
 | `dsh-tab-middle-click` | 13 |
 | `dsh-long-paste` | 15 |
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
 | `dsh-left-rail` | 27 |
-| `dsh-quick-fork` | 14 |
+| `dsh-quick-fork` | 20 |
 
 ## 隐私与数据
 

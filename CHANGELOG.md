@@ -48,6 +48,12 @@ package's own `CHANGELOG.md`.
   `scripts/update-all.mjs` plus the `npm run update` alias. The README now also explains why the
   monorepo root itself cannot be passed to `plugin_manager install_bundle`.
 
+### Removed
+
+- Removed `dsh-continue` from the monorepo: the submodule, its `.gitmodules` entry, the README catalog
+  row and per-plugin section are gone, and the catalog and verification totals now cover eleven
+  packages (292 checks). The standalone `tzhaos/dsh-continue` repository is not affected.
+
 ## [1.0.0] - 2026-10-18
 
 ### Added

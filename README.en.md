@@ -2,12 +2,12 @@
 
 # DSH Plugins
 
-**Twelve independent DeepSeek Harness Web client plugins.**
+**Eleven independent DeepSeek Harness Web client plugins.**
 
-Sidebar sections · File-link actions · Composer history · Hover · One-click continue · Queue withdraw · Tab middle-click · Selection fork
+Sidebar sections · File-link actions · Composer history · Hover · Queue withdraw · Tab middle-click · Selection fork
 
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)](https://github.com/deepseek-ai/deepseek-harness)
-[![Checks](https://img.shields.io/badge/checks-342-brightgreen)](scripts/check-all.mjs)
+[![Checks](https://img.shields.io/badge/checks-292-brightgreen)](scripts/check-all.mjs)
 [![Runtime deps](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)](package.json)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -22,7 +22,7 @@ Sidebar sections · File-link actions · Composer history · Hover · One-click 
 ## What this is
 
 A monorepo of Web client plugins for
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH). The twelve packages can be
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH). The eleven packages can be
 installed together or independently, enabled and disabled separately, and each is still a complete
 DSH bundle.
 
@@ -35,16 +35,15 @@ sessions, or reimplement the agent.
 | [`dsh-file-link-actions`](https://github.com/tzhaos/dsh-file-link-actions) | File-link context menu: default app, reveal folder, copy path | 1.0.0 | 20 |
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | Searchable composer history with `↑` recall | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | Unified button/tab hover and Codex-style tooltips | 1.0.11 | 34 |
-| [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | Continue through the send button with a hidden “Continue conversation” turn (no Goal service) | 1.5.0 | 27 |
 | [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | Queue withdraw/native edit, full-row drag reordering, merge and lock | 1.11.5 | 40 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | Close sidebar/dock tabs with a middle-click | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | Turn long pasted text into a `.txt` attachment, expandable back into the composer | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | Drag a sidebar file into the composer as a reference and bridge Desktop file paths | 1.1.0 | 15 |
 | [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Back/forward session controls in the Windows caption row | 1.3.4 | 11 |
 | [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex-style left rail + brand menu | 1.9.2 | 27 |
-| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.3.0 | 13 |
+| [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | Select text and open a temporary side conversation in the right sidebar | 0.3.0 | 20 |
 
-All packages: **342 zero-dependency checks**; no build step, no runtime npm dependencies.
+All packages: **292 zero-dependency checks**; no build step, no runtime npm dependencies.
 
 ## Agent install prompt
 
@@ -91,14 +90,13 @@ From a Creator-preset session:
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-polish")
 ```
 
-`target` must be absolute. All twelve targets:
+`target` must be absolute. All eleven targets:
 
 ```text
 <monorepo>/packages/dsh-sidebar-sections
 <monorepo>/packages/dsh-file-link-actions
 <monorepo>/packages/dsh-composer-history
 <monorepo>/packages/dsh-hover-polish
-<monorepo>/packages/dsh-continue
 <monorepo>/packages/dsh-queue-withdraw
 <monorepo>/packages/dsh-tab-middle-click
 <monorepo>/packages/dsh-quick-fork
@@ -339,35 +337,6 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 
 ---
 
-### dsh-continue
-
-[![version](https://img.shields.io/badge/version-1.5.0-blue)](https://github.com/tzhaos/dsh-continue)
-[![checks](https://img.shields.io/badge/checks-27-brightgreen)](https://github.com/tzhaos/dsh-continue/blob/main/scripts/check.mjs)
-
-After a task is **stopped, errors or is truncated**, an empty composer's send button becomes a solid
-play control.
-
-- A click injects one hidden user message through this plugin's own Host route
-  (`source.kind = 'continue'`); the Goal service is not involved
-- No ordinary user bubble: the chat shows an expandable **“Continue conversation”** card with a play
-  glyph
-- No draft insertion, no attachments, no bypassing the queue
-- Typing or adding attachments restores the normal send button
-
-**Shown for:** `aborted`, `blocked`, `error`, `max-tokens`, `interrupted`, and a trailing
-`turn/start` without an end. Normal `completed` and `forked` endings do not show it.
-
-**Limitations:** the card relabel matches by injected round time (±4 seconds) against the Host's
-built-in trigger card; a DSH change to that card needs adaptation.
-
-```text
-plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue")
-```
-
-[Docs](https://github.com/tzhaos/dsh-continue/blob/main/README.en.md) · [中文](https://github.com/tzhaos/dsh-continue#readme)
-
----
-
 ### dsh-queue-withdraw
 
 [![version](https://img.shields.io/badge/version-1.11.5-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
@@ -527,7 +496,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-left-rai
 
 ```text
 .
-├── packages/          # twelve complete DSH bundles
+├── packages/          # eleven complete DSH bundles
 ├── scripts/
 │   ├── check-all.mjs
 │   └── install-all.mjs
@@ -551,7 +520,7 @@ node scripts/check-all.mjs
 ```
 
 ```text
-all packages passed: 8 packages, 213 checks
+all packages passed: 11 packages, 292 checks
 ```
 
 | Package | Checks |
@@ -560,14 +529,13 @@ all packages passed: 8 packages, 213 checks
 | `dsh-file-link-actions` | 20 |
 | `dsh-composer-history` | 29 |
 | `dsh-hover-polish` | 34 |
-| `dsh-continue` | 19 |
-| `dsh-queue-withdraw` | 22 |
+| `dsh-queue-withdraw` | 40 |
 | `dsh-tab-middle-click` | 13 |
 | `dsh-long-paste` | 15 |
 | `dsh-sidebar-file-drop` | 15 |
 | `dsh-nav-back-forward` | 11 |
 | `dsh-left-rail` | 27 |
-| `dsh-quick-fork` | 14 |
+| `dsh-quick-fork` | 20 |
 
 ## Privacy and data
 
