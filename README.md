@@ -7,7 +7,7 @@
 侧边栏分区 · 文件链接右键 · 输入历史 · Hover · 一键继续 · 排队消息撤回 · 标签中键关闭 · 划选复创
 
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-4D6BFE)](https://github.com/deepseek-ai/deepseek-harness)
-[![Checks](https://img.shields.io/badge/checks-201-brightgreen)](scripts/check-all.mjs)
+[![Checks](https://img.shields.io/badge/checks-342-brightgreen)](scripts/check-all.mjs)
 [![Runtime deps](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)](package.json)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -32,16 +32,16 @@ monorepo。十二个 package 可以一起安装，也可以单独安装、单独
 | [`dsh-file-link-actions`](https://github.com/tzhaos/dsh-file-link-actions) | 文件链接右键：默认应用打开、定位文件夹、复制路径 | 1.0.0 | 20 |
 | [`dsh-composer-history`](https://github.com/tzhaos/dsh-composer-history) | 可搜索、可用 `↑` 取回的输入历史 | 1.2.0 | 29 |
 | [`dsh-hover-polish`](https://github.com/tzhaos/dsh-hover-polish) | 统一按钮/标签 hover 与 Codex 风格 Tooltip | 1.0.11 | 34 |
-| [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | 停止/报错/截断后用发送按钮触发隐藏 Goal 继续 | 1.3.0 | 21 |
-| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 排队消息编辑即撤回、整行拖动排序、合并与草稿附件保留 | 1.7.1 | 26 |
+| [`dsh-continue`](https://github.com/tzhaos/dsh-continue) | 停止/报错/截断后用发送按钮注入隐藏的「继续对话」轮次（不依赖 Goal） | 1.5.0 | 27 |
+| [`dsh-queue-withdraw`](https://github.com/tzhaos/dsh-queue-withdraw) | 排队消息撤回/原生编辑、整行拖动排序、合并与锁定 | 1.11.5 | 40 |
 | [`dsh-tab-middle-click`](https://github.com/tzhaos/dsh-tab-middle-click) | 鼠标中键关闭侧边栏/停靠标签 | 1.0.0 | 13 |
 | [`dsh-long-paste`](https://github.com/tzhaos/dsh-long-paste) | 超长文本粘贴为 `.txt` 附件，可展开回输入框 | 1.1.0 | 15 |
 | [`dsh-sidebar-file-drop`](https://github.com/tzhaos/dsh-sidebar-file-drop) | 从侧边栏文件列表拖文件到输入框，并桥接 Desktop 文件路径 | 1.1.0 | 15 |
-| [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | 左上角会话前进/后退按钮 | 1.3.4 | 11 |
+| [`dsh-nav-back-forward`](https://github.com/tzhaos/dsh-nav-back-forward) | Windows 标题栏右侧的会话前进/后退按钮 | 1.3.4 | 11 |
 | [`dsh-left-rail`](https://github.com/tzhaos/dsh-left-rail) | Codex 风格左侧图标栏 + 品牌菜单 | 1.9.2 | 27 |
 | [`dsh-quick-fork`](https://github.com/tzhaos/dsh-quick-fork) | 划选文字，在右侧栏开临时侧边对话 | 0.3.0 | 13 |
 
-全部 package 合计 **213 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
+全部 package 合计 **342 项零依赖检查**；无构建步骤、无运行时 npm 依赖。
 
 ## 给 Agent 的安装指令
 
@@ -331,18 +331,19 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-hover-po
 
 ### dsh-continue
 
-[![version](https://img.shields.io/badge/version-1.1.1-blue)](https://github.com/tzhaos/dsh-continue)
-[![checks](https://img.shields.io/badge/checks-19-brightgreen)](https://github.com/tzhaos/dsh-continue/blob/main/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.5.0-blue)](https://github.com/tzhaos/dsh-continue)
+[![checks](https://img.shields.io/badge/checks-27-brightgreen)](https://github.com/tzhaos/dsh-continue/blob/main/scripts/check.mjs)
 
-任务 **停止、报错或被截断** 后，输入框为空时把发送按钮变成播放键。
+任务 **停止、报错或被截断** 后，输入框为空时把发送按钮变成实心播放键。
 
-- 点击后通过当前 Session 的 `prompt()` 提交「继续」/「Continue」
+- 点击后由插件自己的宿主路由注入一条隐藏的 user 消息（`source.kind = 'continue'`），不经过 Goal 服务
+- 聊天里不会出现普通用户气泡，而是一张可展开的 **「继续对话」** 卡片，图标为播放三角
 - 不填草稿、不加附件、不绕过队列
 - 输入文字或附件后立即恢复普通发送按钮
 
 **显示状态：** 仅在 `aborted`、`blocked`、`error`、`max-tokens`、`interrupted`，或尾部只有 `turn/start` 的异常中断时出现；正常完成和 `forked` 不显示。
 
-**限制：** 只覆盖发送按钮/输入框状态；依赖宿主 primary button 的 DOM 定位；大改布局后可能需要适配。
+**限制：** 卡片标题的替换按注入时间匹配宿主内置触发卡片（±4 秒），DSH 若改变该卡片结构需要适配。
 
 ```text
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue")
@@ -354,21 +355,20 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-continue
 
 ### dsh-queue-withdraw
 
-[![version](https://img.shields.io/badge/version-1.3.0-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
-[![checks](https://img.shields.io/badge/checks-20-brightgreen)](https://github.com/tzhaos/dsh-queue-withdraw/blob/main/scripts/check.mjs)
+[![version](https://img.shields.io/badge/version-1.11.5-blue)](https://github.com/tzhaos/dsh-queue-withdraw)
+[![checks](https://img.shields.io/badge/checks-40-brightgreen)](https://github.com/tzhaos/dsh-queue-withdraw/blob/main/scripts/check.mjs)
 
-把排队中的消息 **撤回输入栏**，编辑统一改为撤回，并支持拖动排序。
+排队消息可以 **撤回输入栏**、**原生行内编辑**、**整行拖动排序**，也可以 **锁定不发**。
 
-- 编辑图标即撤回：整条消息（文本 + 附件）放回输入框
-- 行首拖动把手调整队列发送顺序，Host 通过 `Inbox.splice()` 原子重排
+- 点击原生编辑图标：文本消息走宿主自己的行内编辑器，附件块由 `conversation.updateQueue` 包装保留
+- 独立撤回按钮：位于原生操作按钮之后，把整条消息放回输入框
+- 整行可拖：没有拖拽把手，在行上按住拖动即可排序；Host 通过 `Inbox.splice()` 原子重排
+- 每条消息在原生操作按钮左侧有一个锁：锁住后文字加删除线、不能编辑、回合结束不自动发送；解锁立即恢复发送
 - 切换会话再回来时恢复草稿里的图片/文件附件
-- 文本追加到现有草稿，而不是覆盖
-- 图片附件可回填
-- 文件附件在选择文件时缓存到浏览器 IndexedDB，撤回时重新注册为草稿附件
+- 图片/文件附件可回填；文件在选择时缓存到浏览器 IndexedDB，撤回时重新注册为草稿附件
 - 通过公开的 `Session.updateQueue(remove)` 移除队列项
-- 移除失败恢复原草稿，消息仍在队列
 
-**限制：** 只覆盖插件加载后选择的文件；安装前已存在的队列文件没有缓存。清空站点数据、隐私模式、IndexedDB 失败或缓存超过 24 小时时，文件可能无法恢复。缓存按 `name + size` 匹配。
+**限制：** 只覆盖插件加载后选择的文件；安装前已存在的队列文件没有缓存。锁定依赖宿主侧 `inbox.claim` 补丁，只跑宿主不跑 Web 客户端时无法拦截。
 
 ```text
 plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-queue-withdraw")
@@ -462,7 +462,7 @@ plugin_manager(action="install_bundle", target="<monorepo>/packages/dsh-sidebar-
 
 ### dsh-nav-back-forward
 
-在窗口左上角提供会话的 **后退 / 前进** 按钮，紧贴侧边栏开关左侧。
+在 Windows 标题栏、侧边栏开关右侧提供会话的 **后退 / 前进** 按钮，与侧边栏开关同在 28px 轴线上。
 
 - 记录主视图当前 Session 的切换历史
 - 后退/前进调用 `uiWorkspace.openSession()`
