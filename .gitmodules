@@ -46,3 +46,6 @@
 	path = packages/dsh-left-rail
 	url = https://github.com/tzhaos/dsh-left-rail.git
 	branch = main
+[submodule "packages/dsh-codex-style"]
+	path = packages/dsh-codex-style
+	url = https://github.com/tzhaos/dsh-codex-style.git
